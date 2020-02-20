@@ -5,8 +5,8 @@
 
    Module joueur
    ~~~~~~~~~~~~~
-   
-   Ce module gère un joueur. 
+
+   Ce module gère un joueur.
 """
 
 def Joueur(nom):
@@ -16,6 +16,7 @@ def Joueur(nom):
     retourne le joueur ainsi créé
     """
     pass
+
 def ajouterTresor(joueur,tresor):
     """
     ajoute un trésor à trouver à un joueur (ce trésor sera ajouter en fin de liste) Si le trésor est déjà dans la liste des trésors à trouver la fonction ne fait rien
@@ -36,7 +37,7 @@ def prochainTresor(joueur):
     pass
 
 def tresorTrouve(joueur):
-    """ 
+    """
     enlève le premier trésor à trouver car le joueur l'a trouvé
     paramètre:
         joueur le joueur
@@ -56,6 +57,6 @@ def getNom(joueur):
     """
     retourne le nom du joueur
     paramètre: joueur le joueur
-    résultat: le nom du joueur 
+    résultat: le nom du joueur
     """
     pass

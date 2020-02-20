@@ -22,13 +22,13 @@ def LabyrintheTexte(labyrinthe):
     résultat: une vue texte du labyrinthe
     """
     return {"labyrinthe":labyrinthe}
-    
+
 def setLabyrinthe(lmt,labyrinthe):
     """
     association d'un jeu de labyrinthe à la vue mode texte
     paramètres: lmt: une vue de labyrinthe mode texte
                 labyrinthe le labyrinthe à afficher
-    La fonction ne retourne pas de résultat mais modifie lmt    
+    La fonction ne retourne pas de résultat mais modifie lmt
     """
     lmt["labyrinthe"]=labyrinthe
 
@@ -39,7 +39,7 @@ def getLabyrinthe(lmt):
     resultat le labyrinthe associé
     """
     return lmt["labyrinthe"]
-    
+
 def afficheCarte(lmt, carte,pion=1,tresor=-1):
     """
     affiche une carte
@@ -52,23 +52,23 @@ def afficheCarte(lmt, carte,pion=1,tresor=-1):
     coulFond=NORMAL
     coulCar=NORMAL
     style=AUCUN
-    
+
     if getTresor(carte)==tresor:
         coulFond=GRIS
         coulCar=NOIR
-        
+
     lesPions=getListePions(carte)
-    
+
     if len(lesPions)>0:
         if len(lesPions)>1:
             style=GRAS
         if possedePion(carte,pion):
             coulCar=pion
-        else:  
+        else:
             coulCar=lesPions[0]
-            
+
     pcouleur(toChar(carte),coulCar,coulFond,style)
- 
+
 def afficheLabyrinthe(lmt,message="",sauts=0):
     """
     affiche un jeu de labyrinthe
@@ -105,7 +105,7 @@ def afficheLabyrinthe(lmt,message="",sauts=0):
         print(" "+str(i),sep='',end='')
     print()
     for i in range(getNbLignes(plateau)):
-        print(remplissage,end='')            
+        print(remplissage,end='')
         if i%2==0:
             print(' ',sep='',end='')
         else:
@@ -115,10 +115,10 @@ def afficheLabyrinthe(lmt,message="",sauts=0):
         if i%2==0:
             print(' ',sep='',end='')
         else:
-            print(str(i),sep='',end='')            
+            print(str(i),sep='',end='')
         print()
     print(' ',sep='',end='')
-    print(remplissage,end='')        
+    print(remplissage,end='')
     for i in range(1,7,2):
         print(" "+str(i),sep='',end='')
     print()
@@ -173,13 +173,13 @@ def saisirDeplacement(lmt):
     permet de saisir les coordonnées du point d'arrivée visé par le joueur courant
     paramètre: lmt: une vue texte de labyrinthe
     résultat: un couple d'entier (lin,col) indiquant les coordonnées de la case destination. Si l'utilisateur a entré des coordonnées incorrecte la fonction retourne (-1,-1)
-    """    
+    """
     pass
-        
+
 # demarre la partie en mode texte
 def demarrer(lmt):
     """
-    lance le jeu du labyrinte en mode texte, il faut que le labyrinthe et 
+    lance le jeu du labyrinte en mode texte, il faut que le labyrinthe et
     les joueurs aient été créés avant ce lancement
     paramètre: lmt: une vue texte de labyrinthe
     la fonction ne retourne rien mais effectue une partie de labyrinthe
@@ -194,7 +194,7 @@ def demarrer(lmt):
             x,y=saisirOrdre(lmt) # on saisit une ordre de phase 1
             res=executerActionPhase1(labyrinthe,x,y) # on effectue les actions liées à cet ordre
             # traitement du résultat de l'ordre pour afficher le bon message à l'utilisateur
-            if res==0: 
+            if res==0:
                 message="La carte a été tournée"
             elif res==1:
                 message="La carte a bien été insérée"
@@ -205,7 +205,7 @@ def demarrer(lmt):
             else:
                 message="Veuillez soit tourner la carte soit l'insérer"
             afficheLabyrinthe(lmt,message)
-            
+
         # la première phase est terminée, on va demander au joueur sa case destination
         chemin=None
         xDep,yDep=getCoordonneesJoueurCourant(labyrinthe)
@@ -215,8 +215,8 @@ def demarrer(lmt):
             xA,yA=saisirDeplacement(lmt) # saisie de la destination
             if xA==-1 or yA==-1: # coordonées incorrectes
                 afficheLabyrinthe(lmt,"Veuillez choisir une case du labyrinthe")
-            else: # coordonées correctes 
-                  #=> on va verifier l'accessibilité de la case destination pour le joueur courant 
+            else: # coordonées correctes
+                  #=> on va verifier l'accessibilité de la case destination pour le joueur courant
                 chemin=accessibleDist(plateau,xDep,yDep,xA,yA)
                 if chemin==None:
                     afficheLabyrinthe(lmt,"Cette case n'est pas accessible au joueur "+nomJC)
@@ -243,7 +243,7 @@ def demarrer(lmt):
 # programme principal
 #------------------------------
 
-if __name__=='__main__': 
+if __name__=='__main__':
     print("Bienvenue dans le jeu du labyrinthe")
     # saisie des noms de joueurs
     listeJoueurs=[]
@@ -257,7 +257,7 @@ if __name__=='__main__':
             rep ='N'
         else:
             rep=input("Y a-t-il un autre joueurs (o/N)? ")
-    
+
     # saisie du nombre de trésors par joueur
     nbTresors=input("Combien de trésors à trouver par joueur (0 pour le maximum possible)?")
     ok=True
