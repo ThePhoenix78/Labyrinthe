@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-        Projet Labyrinthe 
+        Projet Labyrinthe
         Projet Python 2020 - Licence Informatique UNC (S3 TREC7)
-        
+
    Module carte
    ~~~~~~~~~~~~
-   
-   Ce module gère les cartes du labyrinthe. 
+
+   Ce module gère les cartes du labyrinthe.
 """
 import random
 
@@ -29,7 +29,30 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     tresor est le numéro du trésor qui se trouve sur la carte (0 s'il n'y a pas de trésor)
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
+    carte='Ø'
+    if nord and est and sud and ouest:
+        carte='╬'
+    elif nord and sud and est:
+        carte='╠'
+    elif nord and ouest and est:
+        carte='╩'
+    elif sud and ouest and est:
+        carte='╦'
+    elif nord and sud and ouest:
+        carte='╣'
+    elif nord and sud:
+        carte='║'
+    elif nord and ouest:
+        carte='╝'
+    elif nord and est:
+        carte='╚'
+    elif sud and est:
+        carte='╔'
+    elif sud and ouest:
+        carte='╗'
+
     pass
+
 
 def estValide(c):
     """
@@ -43,7 +66,7 @@ def murNord(c):
     retourne un booléen indiquant si la carte possède un mur au nord
     paramètre: c une carte
     """
-    pass
+    return
 
 def murSud(c):
     """
@@ -143,7 +166,7 @@ def tournerHoraire(c):
     """
     fait tourner la carte dans le sens horaire
     paramètres: c une carte
-    Cette fonction modifie la carte mais ne retourne rien    
+    Cette fonction modifie la carte mais ne retourne rien
     """
     pass
 
@@ -151,21 +174,21 @@ def tournerAntiHoraire(c):
     """
     fait tourner la carte dans le sens anti-horaire
     paramètres: c une carte
-    Cette fonction modifie la carte mais ne retourne rien    
+    Cette fonction modifie la carte mais ne retourne rien
     """
     pass
 def tourneAleatoire(c):
     """
     faire tourner la carte d'un nombre de tours aléatoire
     paramètres: c une carte
-    Cette fonction modifie la carte mais ne retourne rien    
+    Cette fonction modifie la carte mais ne retourne rien
     """
     pass
 
 def coderMurs(c):
     """
-    code les murs sous la forme d'un entier dont le codage binaire 
-    est de la forme bNbEbSbO où bN, bE, bS et bO valent 
+    code les murs sous la forme d'un entier dont le codage binaire
+    est de la forme bNbEbSbO où bN, bE, bS et bO valent
        soit 0 s'il n'y a pas de mur dans dans la direction correspondante
        soit 1 s'il y a un mur dans la direction correspondante
     bN est le chiffre des unité, BE des dizaine, etc...
@@ -182,7 +205,7 @@ def decoderMurs(c,code):
     paramètres c une carte
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
-    """    
+    """
     pass
 def toChar(c):
     """
@@ -223,6 +246,6 @@ def passageEst(carte1,carte2):
     suppose que la carte2 est placée à l'est de la carte1 et indique
     s'il y a un passage entre ces deux cartes en passant par l'est
     paramètres carte1 et carte2 deux cartes
-    résultat un booléen    
+    résultat un booléen
     """
     pass

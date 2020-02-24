@@ -14,12 +14,6 @@ from plateau import *
 
 #l=Labyrinthe(listeJoueurs,nbTresorsMax=nbTresorsInt)
 def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
-    print(nomsJoueurs,nbTresors,nbTresorsMax)
-    listeDesEntites=[]
-    if nbTresorsMax==0:
-        nbTresorsMax=int(nbTresors/len(nomsJoueurs))
-    for i in range(len(nomsJoueurs)):
-        listeDesEntites.append([nomJoueurs[i],nbTresors])
     """
     permet de créer un labyrinthe avec nbJoueurs joueurs, nbTresors trésors
     chacun des joueurs aura au plus nbTresorMax à trouver
@@ -31,7 +25,6 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
                 nbTresorMax le nombre de trésors maximum distribué à chaque joueur
     résultat: le labyrinthe crée
     """
-    pass
     return
 
 def getPlateau(labyrinthe):
@@ -40,16 +33,15 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    pass
+    return
 
 def getNbParticipants(labyrinthe):
-    return len(labyrinthe)
     """
     retourne le nombre de joueurs engagés dans la partie
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de joueurs de la partie
     """
-    pass
+    return len(labyrinthe)
 
 def getNomJoueurCourant(labyrinthe):
     """

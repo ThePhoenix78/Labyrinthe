@@ -124,7 +124,6 @@ def decalageColonneEnHaut(matrice, numCol, nouvelleValeur=0):
                 matrice[i][j]=matrice[i+1][j]
             elif j==numCol and i+1==len(matrice):
                 matrice[i][j]=nouvelleValeur
-    print(matrice)
     return eject
 
 
@@ -150,5 +149,4 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
             elif j==numCol and i+1==len(matrice):
                 matrice[i][j]=nouvelleValeur
     matrice.reverse()
-    print(matrice)
     return eject
