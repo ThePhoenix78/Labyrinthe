@@ -59,6 +59,11 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
+    if c in listeCartes:
+      True
+    else:
+      False
+    
     pass
 
 def murNord(c):
@@ -66,6 +71,11 @@ def murNord(c):
     retourne un booléen indiquant si la carte possède un mur au nord
     paramètre: c une carte
     """
+    if c=='╦' or c=='╔' or c=='╗':
+      True
+    else:
+      False
+
     return
 
 def murSud(c):
@@ -73,6 +83,11 @@ def murSud(c):
     retourne un booléen indiquant si la carte possède un mur au sud
     paramètre: c une carte
     """
+    if c=='╩' or c=='╝' or c=='╚':
+      True
+    else:
+      False
+
     pass
 
 def murEst(c):
@@ -80,6 +95,11 @@ def murEst(c):
     retourne un booléen indiquant si la carte possède un mur à l'est
     paramètre: c une carte
     """
+    if c=='╣' or c=='║' or c=='╝' or c=='╗':
+      True
+    else:
+      False
+
     pass
 
 def murOuest(c):
@@ -87,6 +107,11 @@ def murOuest(c):
     retourne un booléen indiquant si la carte possède un mur à l'ouest
     paramètre: c une carte
     """
+    if c=='╠' or c=='║' or c=='╚' or c=='╔':
+      True
+    else:
+      False
+
     pass
 
 def getListePions(c):
@@ -94,6 +119,7 @@ def getListePions(c):
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
+
     pass
 
 def setListePions(c,listePions):

@@ -15,6 +15,9 @@ def Joueur(nom):
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
+    NouvJoueur=nom
+    ListeTresors=[]
+    
     pass
 
 def ajouterTresor(joueur,tresor):
@@ -25,6 +28,11 @@ def ajouterTresor(joueur,tresor):
         tresor un entier strictement positif
     la fonction ne retourne rien mais modifie le joueur
     """
+    if tresor in ListeTresors:
+      pass
+    ListeTresors.append(tresor)
+    
+
     pass
 
 def prochainTresor(joueur):
