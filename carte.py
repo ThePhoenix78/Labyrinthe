@@ -59,68 +59,70 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
-    if c in listeCartes:
-      True
-    else:
-      False
+    Valide=True
+    if c not in listeCartes:
+      Valide=False
     
-    pass
+    return Valide
 
 def murNord(c):
     """
     retourne un booléen indiquant si la carte possède un mur au nord
     paramètre: c une carte
     """
-    if c=='╦' or c=='╔' or c=='╗':
-      True
-    else:
-      False
+    PresenceMur=True
+    listCarteNord=['╦','╔','╗']
+    if c not in listCarteNord:
+      PresenceMur=False
 
-    return
+    return PresenceMur
 
 def murSud(c):
     """
     retourne un booléen indiquant si la carte possède un mur au sud
     paramètre: c une carte
     """
-    if c=='╩' or c=='╝' or c=='╚':
-      True
-    else:
-      False
+    PresenceMur=True
+    listCarteSud=['╩','╝','╚']
+    if c not in listCarteSud:
+      PresenceMur=False
 
-    pass
+    return PresenceMur
 
 def murEst(c):
     """
     retourne un booléen indiquant si la carte possède un mur à l'est
     paramètre: c une carte
     """
-    if c=='╣' or c=='║' or c=='╝' or c=='╗':
-      True
-    else:
-      False
+    PresenceMur=True
+    listCarteEst=['╣','║','╝','╗']
+    if c not in listCarteEst:
+      PresenceMur=False
 
-    pass
+    return PresenceMur
 
 def murOuest(c):
     """
     retourne un booléen indiquant si la carte possède un mur à l'ouest
     paramètre: c une carte
     """
-    if c=='╠' or c=='║' or c=='╚' or c=='╔':
-      True
-    else:
-      False
+    PresenceMur=True
+    listCarteOuest=['╠','║','╚','╔']
+    if c not in listCarteEst:
+      PresenceMur=False
 
-    pass
+    return PresenceMur
 
 def getListePions(c):
     """
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
-
-    pass
+    listePions=[]
+    DictCartePion={c:listePions}
+    PionsSurCarte=DictCartePion[c]
+    
+    return PionsSurCarte
 
 def setListePions(c,listePions):
     """
