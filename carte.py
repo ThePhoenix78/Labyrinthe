@@ -29,30 +29,9 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     tresor est le numéro du trésor qui se trouve sur la carte (0 s'il n'y a pas de trésor)
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
-    carte='Ø'
-    if nord and est and sud and ouest:
-        carte='╬'
-    elif nord and sud and est:
-        carte='╠'
-    elif nord and ouest and est:
-        carte='╩'
-    elif sud and ouest and est:
-        carte='╦'
-    elif nord and sud and ouest:
-        carte='╣'
-    elif nord and sud:
-        carte='║'
-    elif nord and ouest:
-        carte='╝'
-    elif nord and est:
-        carte='╚'
-    elif sud and est:
-        carte='╔'
-    elif sud and ouest:
-        carte='╗'
+    DictCarte={"carte":[tresor,pions],"nord":nord,"est":est,"sud":sud,"ouest":ouest}
 
-    pass
-
+    return DictCarte
 
 def estValide(c):
     """
@@ -108,7 +87,7 @@ def murOuest(c):
     """
     PresenceMur=True
     listCarteOuest=['╠','║','╚','╔']
-    if c not in listCarteEst:
+    if c not in listCarteOuest:
       PresenceMur=False
 
     return PresenceMur
@@ -131,14 +110,20 @@ def setListePions(c,listePions):
                 listePions: la liste des pions à poser
     Cette fonction ne retourne rien mais modifie la carte
     """
-    pass
+    DictCartePion={}
+    DictCartePion[c] = listePions
+
 
 def getNbPions(c):
     """
     retourne le nombre de pions se trouvant sur la carte
     paramètre: c une carte
     """
-    pass
+    NbPions=0
+    for i in getListePions(c):
+      NbPions = NbPions+1
+    
+    return NbPions
 
 def possedePion(c,pion):
     """
@@ -146,7 +131,13 @@ def possedePion(c,pion):
     paramètres: c une carte
                 pion un entier compris entre 1 et 4
     """
-    pass
+    ExistePion=True
+    listePions=[]
+    DictCartePion={c:listePions}
+    if pion not in DictCartePion[c]:
+      ExistePion=False
+
+    return ExistePion
 
 
 def getTresor(c):
@@ -154,7 +145,14 @@ def getTresor(c):
     retourne la valeur du trésor qui se trouve sur la carte (0 si pas de trésor)
     paramètre: c une carte
     """
-    pass
+    
+    DictCarteTresors={c:Tresor}
+    TresorsSurCarte=DictCarteTresors[c]
+     
+
+
+    return TresorsSurCarte
+    
 
 def prendreTresor(c):
     """
