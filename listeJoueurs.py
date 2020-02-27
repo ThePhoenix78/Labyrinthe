@@ -18,7 +18,7 @@ def ListeJoueurs(nomsJoueurs):
     paramètre: nomsJoueurs une liste de chaines de caractères
     résultat: la liste des joueurs avec un joueur courant mis à 0
     """
-    pass
+    return listeJoueurs
 
 def ajouterJoueur(joueurs, joueur):
     """
@@ -35,7 +35,7 @@ def initAleatoireJoueurCourant(joueurs):
     paramètre: joueurs un liste de joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    random.shuffle(joueurs)
 
 
 def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
@@ -50,7 +50,9 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
                              de trésor possible
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    liste=[k for k in range(1,nbTresors)]
+    random.shuffle(liste)
+    
 
 def changerJoueurCourant(joueurs):
     """
@@ -83,7 +85,10 @@ def joueurCourantTrouveTresor(joueurs):
     paramètre: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    #mauvais
+    for i in range(len(listeJoueurs)):
+        if joueur == listeJoueurs[i][0]:
+            listeJoueurs[i][1].pop(0)
 
 def nbTresorsRestantsJoueur(joueurs,numJoueur):
     """

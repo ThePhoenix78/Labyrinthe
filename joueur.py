@@ -15,10 +15,12 @@ def Joueur(nom):
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
-    tresor=None
-    NouvJoueur=[nom,tresor]
+    NouvJoueur={}
+    NouvJoueur["nom"]=nom
+    NouvJoueur["tresor"]=[]
 
     return NouvJoueur
+
 
 
 def ajouterTresor(joueur,tresor):
@@ -29,12 +31,8 @@ def ajouterTresor(joueur,tresor):
         tresor un entier strictement positif
     la fonction ne retourne rien mais modifie le joueur
     """
-
-    for i in range(len(listeJoueurs)):
-        if joueur == listeJoueurs[i][0]:
-            listeJoueurs[i][1].append(tresor)
-
-
+    if tresor not in joueur["tresor"]
+        joueur["tresor"].append(tresor)
 
 
 def prochainTresor(joueur):
@@ -44,7 +42,7 @@ def prochainTresor(joueur):
         joueur le joueur
     résultat un entier représentant le trésor ou None
     """
-    return listeJoueurs[i][1][0]
+    return joueur["tresor"][0]
 
 def tresorTrouve(joueur):
     """
@@ -53,9 +51,7 @@ def tresorTrouve(joueur):
         joueur le joueur
     la fonction ne retourne rien mais modifie le joueur
     """
-    for i in range(len(listeJoueurs)):
-        if joueur == listeJoueurs[i][0]:
-            listeJoueurs[i][1].pop(0)
+    joueur["tresor"].pop(0)
 
 def getNbTresorsRestants(joueur):
     """
@@ -63,9 +59,8 @@ def getNbTresorsRestants(joueur):
     paramètre: joueur le joueur
     résultat: le nombre de trésors attribués au joueur
     """
-    for i in range(len(listeJoueurs)):
-        if joueur == listeJoueurs[i][0]:
-            return len(listeJoueurs[i][1])
+
+    return len(joueur["tresor"])
 
 def getNom(joueur):
     """
@@ -73,6 +68,4 @@ def getNom(joueur):
     paramètre: joueur le joueur
     résultat: le nom du joueur
     """
-    for i in range(len(listeJoueurs)):
-        if joueur == listeJoueurs[i][0]:
-            return joueur
+    return joueur["nom"]
