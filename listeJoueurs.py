@@ -37,7 +37,7 @@ def initAleatoireJoueurCourant(joueurs):
     """
     pass
 
-    
+
 def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
     """
     distribue de manière aléatoire des trésors entre les joueurs.
@@ -66,7 +66,7 @@ def getNbJoueurs(joueurs):
     paramètre: joueurs la liste des joueurs
     résultat: le nombre de joueurs de la partie
     """
-    pass
+    return len(joueurs)
 
 def getJoueurCourant(joueurs):
     """
