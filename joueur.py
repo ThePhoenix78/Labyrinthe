@@ -31,7 +31,8 @@ def ajouterTresor(joueur,tresor):
         tresor un entier strictement positif
     la fonction ne retourne rien mais modifie le joueur
     """
-    joueur["tresor"].append(tresor)
+    if tresor not in joueur["tresor"]
+        joueur["tresor"].append(tresor)
 
 
 def prochainTresor(joueur):

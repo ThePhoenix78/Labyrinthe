@@ -50,7 +50,9 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
                              de trésor possible
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    pass
+    liste=[k for k in range(1,nbTresors)]
+    random.shuffle(liste)
+    
 
 def changerJoueurCourant(joueurs):
     """
