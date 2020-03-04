@@ -30,6 +30,31 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
     DictCarte={"carte":[tresor,pions],"nord":nord,"est":est,"sud":sud,"ouest":ouest}
+=======
+    carte='Ø'
+    if nord and est and sud and ouest:
+        carte='╬'
+    elif nord and sud and est:
+        carte='╠'
+    elif nord and ouest and est:
+        carte='╩'
+    elif sud and ouest and est:
+        carte='╦'
+    elif nord and sud and ouest:
+        carte='╣'
+    elif nord and sud:
+        carte='║'
+    elif nord and ouest:
+        carte='╝'
+    elif nord and est:
+        carte='╚'
+    elif sud and est:
+        carte='╔'
+    elif sud and ouest:
+        carte='╗'
+
+
+    pass
 
     return DictCarte
 
@@ -38,11 +63,20 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
+<<<<<<< HEAD
     Valide=True
     if c not in listeCartes:
       Valide=False
     
     return Valide
+=======
+    if c in listeCartes:
+      True
+    else:
+      False
+
+    pass
+>>>>>>> origin/master
 
 def murNord(c):
     """
