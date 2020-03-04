@@ -51,6 +51,7 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     elif sud and ouest:
         carte='╗'
 
+
     pass
 
 
@@ -63,7 +64,7 @@ def estValide(c):
       True
     else:
       False
-    
+
     pass
 
 def murNord(c):

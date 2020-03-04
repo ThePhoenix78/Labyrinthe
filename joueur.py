@@ -59,7 +59,6 @@ def getNbTresorsRestants(joueur):
     paramètre: joueur le joueur
     résultat: le nombre de trésors attribués au joueur
     """
-
     return len(joueur["tresor"])
 
 def getNom(joueur):
