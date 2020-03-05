@@ -29,29 +29,8 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     tresor est le numéro du trésor qui se trouve sur la carte (0 s'il n'y a pas de trésor)
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
-    DictCarte={"carte":[tresor,pions],"nord":nord,"est":est,"sud":sud,"ouest":ouest}
-    #---------------------------------------
-    carte='Ø'
-    if nord and est and sud and ouest:
-        carte='╬'
-    elif nord and sud and est:
-        carte='╠'
-    elif nord and ouest and est:
-        carte='╩'
-    elif sud and ouest and est:
-        carte='╦'
-    elif nord and sud and ouest:
-        carte='╣'
-    elif nord and sud:
-        carte='║'
-    elif nord and ouest:
-        carte='╝'
-    elif nord and est:
-        carte='╚'
-    elif sud and est:
-        carte='╔'
-    elif sud and ouest:
-        carte='╗'
+    DictCarte={"tresor":tresor,"ListePions":pions,"nord":nord,"est":est,"sud":sud,"ouest":ouest}
+  
 
     return DictCarte
 
@@ -60,20 +39,22 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
-#<<<<<<< HEAD
     Valide=True
-    if c not in listeCartes:
-      Valide=False
+    NbCarte=0
+    if DictCarte["nord"]==True:
+      NbCarte=NbCarte+1
+    if DictCarte["est"]==True:
+      NbCarte=NbCarte+1
+    if DictCarte["sud"]==True:
+      NbCarte=NbCarte+1
+    if DictCarte["ouest"]==True:
+      NbCarte=NbCarte+1
 
+    if NbCarte > 2 :
+      Valide==False
+    
+    
     return Valide
-
-    if c in listeCartes:
-      True
-    else:
-      False
-
-    pass
-#>>>>>>> origin/master
 
 def murNord(c):
     """
@@ -81,9 +62,9 @@ def murNord(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    listCarteNord=['╦','╔','╗']
-    if c not in listCarteNord:
+    if DictCarte["nord"]==False:
       PresenceMur=False
+      
 
     return PresenceMur
 
@@ -93,8 +74,7 @@ def murSud(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    listCarteSud=['╩','╝','╚']
-    if c not in listCarteSud:
+    if DictCarte["sud"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -105,8 +85,7 @@ def murEst(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    listCarteEst=['╣','║','╝','╗']
-    if c not in listCarteEst:
+    if DictCarte["est"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -117,8 +96,7 @@ def murOuest(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    listCarteOuest=['╠','║','╚','╔']
-    if c not in listCarteOuest:
+    if DictCarte["ouest"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -128,11 +106,8 @@ def getListePions(c):
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
-    listePions=[]
-    DictCartePion={c:listePions}
-    PionsSurCarte=DictCartePion[c]
-
-    return PionsSurCarte
+    
+    return DictCarte["ListePions"]
 
 def setListePions(c,listePions):
     """
@@ -141,8 +116,8 @@ def setListePions(c,listePions):
                 listePions: la liste des pions à poser
     Cette fonction ne retourne rien mais modifie la carte
     """
-    DictCartePion={}
-    DictCartePion[c] = listePions
+    DictCarte["ListePions"]=listePions
+
 
 
 def getNbPions(c):
@@ -150,11 +125,7 @@ def getNbPions(c):
     retourne le nombre de pions se trouvant sur la carte
     paramètre: c une carte
     """
-    NbPions=0
-    for i in getListePions(c):
-      NbPions = NbPions+1
-
-    return NbPions
+    return len(getListePions(c))
 
 def possedePion(c,pion):
     """
@@ -163,9 +134,7 @@ def possedePion(c,pion):
                 pion un entier compris entre 1 et 4
     """
     ExistePion=True
-    listePions=[]
-    DictCartePion={c:listePions}
-    if pion not in DictCartePion[c]:
+    if pion not in DictCarte["ListePions"]:
       ExistePion=False
 
     return ExistePion
@@ -177,13 +146,8 @@ def getTresor(c):
     paramètre: c une carte
     """
 
-    DictCarteTresors={c:Tresor}
-    TresorsSurCarte=DictCarteTresors[c]
-
-
-
-    return TresorsSurCarte
-
+    return DictCarte["tresor"]
+    
 
 def prendreTresor(c):
     """
@@ -191,7 +155,12 @@ def prendreTresor(c):
     paramètre: c une carte
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    pass
+    tresor=DictCarte["tresor"]
+    DictCarte.pop("tresor")
+    
+    return tresor
+
+
 def mettreTresor(c,tresor):
     """
     met le trésor passé en paramètre sur la carte et retourne la valeur de l'ancien trésor
@@ -199,7 +168,13 @@ def mettreTresor(c,tresor):
                 tresor un entier positif
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    pass
+    TresorsSurCarte=DictCarte[c]
+    TresorAncien=PionsSurCarte[0]
+    TresorsSurCarte.insert(0,tresor)
+
+
+    return TresorAncien
+
 
 def prendrePion(c, pion):
     """
@@ -208,7 +183,10 @@ def prendrePion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
+
+
     pass
+
 
 def poserPion(c, pion):
     """
@@ -219,6 +197,7 @@ def poserPion(c, pion):
     """
     pass
 
+
 def tournerHoraire(c):
     """
     fait tourner la carte dans le sens horaire
@@ -227,6 +206,7 @@ def tournerHoraire(c):
     """
     pass
 
+
 def tournerAntiHoraire(c):
     """
     fait tourner la carte dans le sens anti-horaire
@@ -234,6 +214,8 @@ def tournerAntiHoraire(c):
     Cette fonction modifie la carte mais ne retourne rien
     """
     pass
+
+
 def tourneAleatoire(c):
     """
     faire tourner la carte d'un nombre de tours aléatoire
@@ -241,6 +223,7 @@ def tourneAleatoire(c):
     Cette fonction modifie la carte mais ne retourne rien
     """
     pass
+
 
 def coderMurs(c):
     """
@@ -256,6 +239,7 @@ def coderMurs(c):
     """
     pass
 
+
 def decoderMurs(c,code):
     """
     positionne les murs d'une carte en fonction du code décrit précédemment
@@ -264,12 +248,15 @@ def decoderMurs(c,code):
     Cette fonction modifie la carte mais ne retourne rien
     """
     pass
+
+
 def toChar(c):
     """
     fournit le caractère semi graphique correspondant à la carte (voir la variable listeCartes au début de ce script)
     paramètres c une carte
     """
     pass
+
 
 def passageNord(carte1,carte2):
     """
@@ -280,6 +267,7 @@ def passageNord(carte1,carte2):
     """
     pass
 
+
 def passageSud(carte1,carte2):
     """
     suppose que la carte2 est placée au sud de la carte1 et indique
@@ -288,6 +276,7 @@ def passageSud(carte1,carte2):
     résultat un booléen
     """
     pass
+
 
 def passageOuest(carte1,carte2):
     """
@@ -298,6 +287,7 @@ def passageOuest(carte1,carte2):
     """
     pass
 
+
 def passageEst(carte1,carte2):
     """
     suppose que la carte2 est placée à l'est de la carte1 et indique
@@ -306,3 +296,8 @@ def passageEst(carte1,carte2):
     résultat un booléen
     """
     pass
+
+
+
+if __name__=="__main__":
+
