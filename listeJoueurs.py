@@ -62,7 +62,7 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
         print(nbTresorMax)
 
     liste=[k for k in range(1,nbTresors)]
-    print(len(liste)/val)
+    len(liste)/val)
     random.shuffle(liste)
     for j in range(val):
         for i in range(nbTresorMax):

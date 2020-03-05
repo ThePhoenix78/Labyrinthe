@@ -113,19 +113,14 @@ def decalageColonneEnHaut(matrice, numCol, nouvelleValeur=0):
                  nouvelleValeur la valeur à placer
     résultat: la valeur de la case "ejectée" par le décalage
     """
-    premLig=True
-    for i in range(len(matrice)):
-        for j in range(len(matrice[i])):
-            if j==numCol and premLig:
-                eject=matrice[i][j]
-                matrice[i][j]=matrice[i+1][j]
-                premLig=False
-            elif j==numCol and i+1<len(matrice):
-                matrice[i][j]=matrice[i+1][j]
-            elif j==numCol and i+1==len(matrice):
-                matrice[i][j]=nouvelleValeur
-    return eject
 
+    eject=matrice[0][numCol]
+    for i in range(len(matrice)):
+        if i<len(matrice)-1:
+            matrice[i][numCol]=matrice[i+1][numCol]
+        else:
+            matrice[i][numCol]=nouvelleValeur
+    return eject
 
 def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
     """
@@ -137,16 +132,14 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
     résultat: la valeur de la case "ejectée" par le décalage
     """
     matrice.reverse()
-    premLig=True
-    for i in range(len(matrice)):
-        for j in range(len(matrice[i])):
-            if j==numCol and premLig:
-                eject=matrice[i][j]
-                matrice[i][j]=matrice[i+1][j]
-                premLig=False
-            elif j==numCol and i+1<len(matrice):
-                matrice[i][j]=matrice[i+1][j]
-            elif j==numCol and i+1==len(matrice):
-                matrice[i][j]=nouvelleValeur
+    eject=decalageColonneEnHaut(matrice, numCol, nouvelleValeur)
     matrice.reverse()
     return eject
+
+"""
+matrix=[[1,1,1,1],[2,2,2,2],[3,3,3,3],[4,4,4,4]]
+decalageColonneEnBas(matrix,3,50)
+decalageColonneEnHaut(matrix,0,20)
+for i in matrix:
+    print(i)
+"""
