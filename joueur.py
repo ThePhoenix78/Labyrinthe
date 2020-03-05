@@ -22,7 +22,6 @@ def Joueur(nom):
     return NouvJoueur
 
 
-
 def ajouterTresor(joueur,tresor):
     """
     ajoute un trésor à trouver à un joueur (ce trésor sera ajouter en fin de liste) Si le trésor est déjà dans la liste des trésors à trouver la fonction ne fait rien
@@ -31,7 +30,7 @@ def ajouterTresor(joueur,tresor):
         tresor un entier strictement positif
     la fonction ne retourne rien mais modifie le joueur
     """
-    if tresor not in joueur["tresor"]
+    if tresor not in joueur["tresor"]:
         joueur["tresor"].append(tresor)
 
 

@@ -30,7 +30,7 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
     DictCarte={"carte":[tresor,pions],"nord":nord,"est":est,"sud":sud,"ouest":ouest}
-=======
+    #---------------------------------------
     carte='Ø'
     if nord and est and sud and ouest:
         carte='╬'
@@ -53,9 +53,6 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     elif sud and ouest:
         carte='╗'
 
-
-    pass
-
     return DictCarte
 
 def estValide(c):
@@ -63,20 +60,20 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
-<<<<<<< HEAD
+#<<<<<<< HEAD
     Valide=True
     if c not in listeCartes:
       Valide=False
-    
+
     return Valide
-=======
+
     if c in listeCartes:
       True
     else:
       False
 
     pass
->>>>>>> origin/master
+#>>>>>>> origin/master
 
 def murNord(c):
     """
@@ -134,7 +131,7 @@ def getListePions(c):
     listePions=[]
     DictCartePion={c:listePions}
     PionsSurCarte=DictCartePion[c]
-    
+
     return PionsSurCarte
 
 def setListePions(c,listePions):
@@ -156,7 +153,7 @@ def getNbPions(c):
     NbPions=0
     for i in getListePions(c):
       NbPions = NbPions+1
-    
+
     return NbPions
 
 def possedePion(c,pion):
@@ -179,14 +176,14 @@ def getTresor(c):
     retourne la valeur du trésor qui se trouve sur la carte (0 si pas de trésor)
     paramètre: c une carte
     """
-    
+
     DictCarteTresors={c:Tresor}
     TresorsSurCarte=DictCarteTresors[c]
-     
+
 
 
     return TresorsSurCarte
-    
+
 
 def prendreTresor(c):
     """
