@@ -39,20 +39,14 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
-    Valide=True
+    Valide=False
     NbCarte=0
-    if DictCarte["nord"]==True:
-      NbCarte=NbCarte+1
-    if DictCarte["est"]==True:
-      NbCarte=NbCarte+1
-    if DictCarte["sud"]==True:
-      NbCarte=NbCarte+1
-    if DictCarte["ouest"]==True:
-      NbCarte=NbCarte+1
+    for x, y in DictCarte.items():
+        if y==True:
+            NbCarte=NbCarte+1
 
-    if NbCarte > 2 :
-      Valide==False
-    
+    if NbCarte<3:
+      Valide=True
     
     return Valide
 
@@ -168,9 +162,8 @@ def mettreTresor(c,tresor):
                 tresor un entier positif
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    TresorsSurCarte=DictCarte[c]
-    TresorAncien=PionsSurCarte[0]
-    TresorsSurCarte.insert(0,tresor)
+    TresorAncien=DictCarte["tresor"]
+    DictCarte["tresor"] = tresor
 
 
     return TresorAncien
@@ -183,9 +176,10 @@ def prendrePion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-
-
-    pass
+    if pion in DictCarte["ListePions"]:
+      DictCarte["ListePions"].remove(pion)
+    else:
+      pass
 
 
 def poserPion(c, pion):
@@ -195,7 +189,10 @@ def poserPion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    if pion not in DictCarte["ListePions"]:
+      DictCarte["ListePions"].append(pion)
+    else:
+      pass
 
 
 def tournerHoraire(c):
@@ -204,8 +201,12 @@ def tournerHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
-
+    VariableNord=DictCarte["nord"]
+    DictCarte["nord"]=DictCarte["ouest"]
+    DictCarte["ouest"]=DictCarte["sud"]
+    DictCarte["sud"]=DictCarte["est"]
+    DictCarte["est"]=VariableNord
+    
 
 def tournerAntiHoraire(c):
     """
@@ -213,7 +214,11 @@ def tournerAntiHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    VariableOuest=DictCarte["ouest"]
+    DictCarte["ouest"]=DictCarte["nord"]
+    DictCarte["nord"]=DictCarte["est"]
+    DictCarte["est"]=DictCarte["sud"]
+    DictCarte["sud"]=VariableNord
 
 
 def tourneAleatoire(c):
@@ -222,7 +227,8 @@ def tourneAleatoire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    NbToursAleatoires=random.randint(1,10)
+
 
 
 def coderMurs(c):
@@ -237,7 +243,35 @@ def coderMurs(c):
     paramètre c une carte
     retourne un entier indice du caractère semi-graphique de la carte
     """
-    pass
+    ListeNbBin=[]
+
+    for x in DictCarte.values():
+      if x==True:
+        ListeNbBin.append(1)
+      elif x==False:
+        ListeNbBin.append(0)
+    ListeNbBin.remove(0)
+    ListeNbBin.reverse()
+    print(ListeNbBin)
+
+    EntierIndice=0
+    i=1
+    a=0
+    while i<len(ListeNbBin)-1:
+      while a<1:
+        EntierIndice=EntierIndice + ((ListeNbBin[a]*2)+ListeNbBin[a+1])
+        a=a+1
+
+      if ListeNbBin[i]==0:
+        EntierIndice=(EntierIndice*2) + ListeNbBin[i+1]
+      if ListeNbBin[i]==1:
+        EntierIndice=(EntierIndice*2) + ListeNbBin[i+1]
+      i=i+1
+
+
+    return EntierIndice
+
+
 
 
 def decoderMurs(c,code):
@@ -247,7 +281,8 @@ def decoderMurs(c,code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    pass
+    
+
 
 
 def toChar(c):
@@ -255,7 +290,9 @@ def toChar(c):
     fournit le caractère semi graphique correspondant à la carte (voir la variable listeCartes au début de ce script)
     paramètres c une carte
     """
-    pass
+    Caractere=listeCartes[coderMurs(c)]
+
+    return Caractere
 
 
 def passageNord(carte1,carte2):
@@ -265,7 +302,12 @@ def passageNord(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    Valide=False
+    if carte1["nord"]==False:
+      if carte2["sud"]==False:
+        Valide=True
+    
+    return Valide
 
 
 def passageSud(carte1,carte2):
@@ -275,7 +317,12 @@ def passageSud(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    Valide=False
+    if carte1["sud"]==False:
+        if carte2["nord"]==False:
+          Valide=True
+    
+    return Valide
 
 
 def passageOuest(carte1,carte2):
@@ -285,7 +332,12 @@ def passageOuest(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    Valide=False
+    if carte1["ouest"]==False:
+        if carte2["est"]==False:
+          Valide=True
+    
+    return Valide
 
 
 def passageEst(carte1,carte2):
@@ -295,9 +347,12 @@ def passageEst(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    pass
+    Valide=False
+    if carte1["est"]==False:
+        if carte2["ouest"]==False:
+          Valide=True
+    
+    return Valide
 
 
-
-if __name__=="__main__":
 
