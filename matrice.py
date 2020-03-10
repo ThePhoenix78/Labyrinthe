@@ -135,11 +135,3 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
     eject=decalageColonneEnHaut(matrice, numCol, nouvelleValeur)
     matrice.reverse()
     return eject
-
-"""
-matrix=[[1,1,1,1],[2,2,2,2],[3,3,3,3],[4,4,4,4]]
-decalageColonneEnBas(matrix,3,50)
-decalageColonneEnHaut(matrix,0,20)
-for i in matrix:
-    print(i)
-"""

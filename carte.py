@@ -30,7 +30,7 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
     DictCarte={"tresor":tresor,"ListePions":pions,"nord":nord,"est":est,"sud":sud,"ouest":ouest}
-  
+
 
     return DictCarte
 
@@ -47,7 +47,7 @@ def estValide(c):
 
     if NbCarte<3:
       Valide=True
-    
+
     return Valide
 
 def murNord(c):
@@ -58,7 +58,7 @@ def murNord(c):
     PresenceMur=True
     if DictCarte["nord"]==False:
       PresenceMur=False
-      
+
 
     return PresenceMur
 
@@ -100,7 +100,7 @@ def getListePions(c):
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
-    
+
     return DictCarte["ListePions"]
 
 def setListePions(c,listePions):
@@ -141,7 +141,7 @@ def getTresor(c):
     """
 
     return DictCarte["tresor"]
-    
+
 
 def prendreTresor(c):
     """
@@ -151,7 +151,7 @@ def prendreTresor(c):
     """
     tresor=DictCarte["tresor"]
     DictCarte.pop("tresor")
-    
+
     return tresor
 
 
@@ -206,7 +206,7 @@ def tournerHoraire(c):
     DictCarte["ouest"]=DictCarte["sud"]
     DictCarte["sud"]=DictCarte["est"]
     DictCarte["est"]=VariableNord
-    
+
 
 def tournerAntiHoraire(c):
     """
@@ -243,35 +243,15 @@ def coderMurs(c):
     paramètre c une carte
     retourne un entier indice du caractère semi-graphique de la carte
     """
-    ListeNbBin=[]
-
-    for x in DictCarte.values():
+    val=""
+    for x in c.values():
       if x==True:
-        ListeNbBin.append(1)
+        val+="1"
       elif x==False:
-        ListeNbBin.append(0)
-    ListeNbBin.remove(0)
-    ListeNbBin.reverse()
-    print(ListeNbBin)
+        val+="0"
+    val = int(val,2)
 
-    EntierIndice=0
-    i=1
-    a=0
-    while i<len(ListeNbBin)-1:
-      while a<1:
-        EntierIndice=EntierIndice + ((ListeNbBin[a]*2)+ListeNbBin[a+1])
-        a=a+1
-
-      if ListeNbBin[i]==0:
-        EntierIndice=(EntierIndice*2) + ListeNbBin[i+1]
-      if ListeNbBin[i]==1:
-        EntierIndice=(EntierIndice*2) + ListeNbBin[i+1]
-      i=i+1
-
-
-    return EntierIndice
-
-
+    return val
 
 
 def decoderMurs(c,code):
@@ -281,7 +261,7 @@ def decoderMurs(c,code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    
+    pass
 
 
 
@@ -303,10 +283,9 @@ def passageNord(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["nord"]==False:
-      if carte2["sud"]==False:
+    if carte1["nord"]==False or carte2["sud"]==False:
         Valide=True
-    
+
     return Valide
 
 
@@ -318,10 +297,9 @@ def passageSud(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["sud"]==False:
-        if carte2["nord"]==False:
-          Valide=True
-    
+    if carte1["sud"]==False or carte2["nord"]==False:
+        Valide=True
+
     return Valide
 
 
@@ -333,10 +311,9 @@ def passageOuest(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["ouest"]==False:
-        if carte2["est"]==False:
-          Valide=True
-    
+    if carte1["ouest"]==False or carte2["est"]==False:
+        Valide=True
+
     return Valide
 
 
@@ -348,11 +325,7 @@ def passageEst(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["est"]==False:
-        if carte2["ouest"]==False:
-          Valide=True
-    
+    if carte1["est"]==False or carte2["ouest"]==False:
+        Valide=True
+
     return Valide
-
-
-
