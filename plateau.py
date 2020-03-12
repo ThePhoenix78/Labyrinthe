@@ -5,8 +5,8 @@
 
    Module plateau
    ~~~~~~~~~~~~~~
-   
-   Ce module gère le plateau de jeu. 
+
+   Ce module gère le plateau de jeu.
 """
 
 from matrice import *
@@ -108,7 +108,7 @@ def accessible(plateau,ligD,colD,ligA,colA):
 def accessibleDist(plateau,ligD,colD,ligA,colA):
     """
     indique si il y a un chemin entre la case ligD,colD et la case ligA,colA du plateau
-    mais la valeur de retour est None s'il n'y a pas de chemin, 
+    mais la valeur de retour est None s'il n'y a pas de chemin,
     sinon c'est un chemin possible entre ces deux cases sous la forme d'une liste
     de coordonées (couple de (lig,col))
     paramètres: plateau: le plateau considéré

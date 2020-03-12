@@ -81,9 +81,8 @@ def decalageLigneAGauche(matrice, numLig, nouvelleValeur=0):
                  nouvelleValeur la valeur à placer
     résultat la valeur qui a été ejectée lors du décalage
     """
-    eject=matrice[numLig][0]
     matrice[numLig].append(nouvelleValeur)
-    matrice[numLig].pop(0)
+    eject=matrice[numLig].pop(0)
     return eject
 
 
@@ -96,11 +95,10 @@ def decalageLigneADroite(matrice, numLig, nouvelleValeur=0):
                  nouvelleValeur la valeur à placer
     résultat: la valeur de la case "ejectée" par le décalage
     """
-    eject=matrice[numLig][-1]
-    matrice[numLig].reverse()
-    matrice[numLig].append(nouvelleValeur)
-    matrice[numLig].reverse()
-    matrice[numLig].pop()
+    nouvelleValeur=[nouvelleValeur]
+    nouvelleValeur.extend(matrice[numLig])
+    matrice[numLig]=nouvelleValeur
+    eject=matrice[numLig].pop()
     return eject
 
 
@@ -115,11 +113,9 @@ def decalageColonneEnHaut(matrice, numCol, nouvelleValeur=0):
     """
 
     eject=matrice[0][numCol]
-    for i in range(len(matrice)):
-        if i<len(matrice)-1:
-            matrice[i][numCol]=matrice[i+1][numCol]
-        else:
-            matrice[i][numCol]=nouvelleValeur
+    for i in range(len(matrice)-1):
+        matrice[i][numCol]=matrice[i+1][numCol]
+    matrice[-1][numCol]=nouvelleValeur
     return eject
 
 def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
@@ -131,7 +127,18 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
                  nouvelleValeur la valeur à placer
     résultat: la valeur de la case "ejectée" par le décalage
     """
-    matrice.reverse()
-    eject=decalageColonneEnHaut(matrice, numCol, nouvelleValeur)
-    matrice.reverse()
+    eject=matrice[-1][numCol]
+    val = [matrice[i][numCol] for i in range(len(matrice))]
+    for i in range(len(val)):
+        matrice[i][numCol]=val[i-1]
+    matrice[0][numCol]=nouvelleValeur
     return eject
+
+if __name__=="__main__":
+    mat=[[10,20,30,40],[11,21,31,41],[12,22,32,42],[13,23,33,43]]
+    decalageColonneEnHaut(mat,3,99)
+    decalageColonneEnBas(mat,2,99)
+    decalageLigneADroite(mat,2,99)
+    decalageLigneAGauche(mat,1,99)
+    for ligne in mat:
+        print(ligne)

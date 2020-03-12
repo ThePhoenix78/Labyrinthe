@@ -261,6 +261,7 @@ def decoderMurs(c,code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
+
     pass
 
 
