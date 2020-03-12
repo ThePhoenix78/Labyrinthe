@@ -55,45 +55,28 @@ def murNord(c):
     retourne un booléen indiquant si la carte possède un mur au nord
     paramètre: c une carte
     """
-    PresenceMur=True
-    if c["nord"]==False:
-      PresenceMur=False
-
-
-    return PresenceMur
+    return c["nord"]
 
 def murSud(c):
     """
     retourne un booléen indiquant si la carte possède un mur au sud
     paramètre: c une carte
     """
-    PresenceMur=True
-    if c["sud"]==False:
-      PresenceMur=False
-
-    return PresenceMur
+    return c["sud"]
 
 def murEst(c):
     """
     retourne un booléen indiquant si la carte possède un mur à l'est
     paramètre: c une carte
     """
-    PresenceMur=True
-    if c["est"]==False:
-      PresenceMur=False
-
-    return PresenceMur
+    return c["est"]
 
 def murOuest(c):
     """
     retourne un booléen indiquant si la carte possède un mur à l'ouest
     paramètre: c une carte
     """
-    PresenceMur=True
-    if c["ouest"]==False:
-      PresenceMur=False
-
-    return PresenceMur
+    return c["ouest"]
 
 def getListePions(c):
     """
@@ -113,7 +96,6 @@ def setListePions(c,listePions):
     c["ListePions"]=listePions
 
 
-
 def getNbPions(c):
     """
     retourne le nombre de pions se trouvant sur la carte
@@ -127,11 +109,7 @@ def possedePion(c,pion):
     paramètres: c une carte
                 pion un entier compris entre 1 et 4
     """
-    ExistePion=True
-    if pion not in c["ListePions"]:
-      ExistePion=False
-
-    return ExistePion
+    return pion in c["ListePions"]
 
 
 def getTresor(c):
@@ -139,7 +117,6 @@ def getTresor(c):
     retourne la valeur du trésor qui se trouve sur la carte (0 si pas de trésor)
     paramètre: c une carte
     """
-
     return c["tresor"]
 
 
@@ -149,9 +126,8 @@ def prendreTresor(c):
     paramètre: c une carte
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    tresor=c["tresor"]
-    c.pop("tresor")
-
+    tresor=c.pop("tresor")
+    c["tresor"]=None
     return tresor
 
 
@@ -165,7 +141,6 @@ def mettreTresor(c,tresor):
     TresorAncien=c["tresor"]
     c["tresor"] = tresor
 
-
     return TresorAncien
 
 
@@ -178,8 +153,6 @@ def prendrePion(c, pion):
     """
     if pion in c["ListePions"]:
       c["ListePions"].remove(pion)
-    else:
-      pass
 
 
 def poserPion(c, pion):
@@ -191,8 +164,6 @@ def poserPion(c, pion):
     """
     if pion not in c["ListePions"]:
       c["ListePions"].append(pion)
-    else:
-      pass
 
 
 def tournerHoraire(c):
@@ -218,7 +189,7 @@ def tournerAntiHoraire(c):
     c["ouest"]=c["nord"]
     c["nord"]=c["est"]
     c["est"]=c["sud"]
-    c["sud"]=VariableNord
+    c["sud"]=VariableOuest
 
 
 def tourneAleatoire(c):
@@ -227,8 +198,9 @@ def tourneAleatoire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    NbToursAleatoires=random.randint(1,10)
-
+    alea=random.randint(1,10)
+    for i in range(alea):
+        tournerHoraire(c)
 
 
 def coderMurs(c):
@@ -245,10 +217,10 @@ def coderMurs(c):
     """
     val=""
     for x in c.values():
-      if x==True:
-        val+="1"
-      elif x==False:
-        val+="0"
+        if x==True:
+            val+="1"
+        elif x==False:
+            val+="0"
     val = int(val,2)
 
     return val
@@ -261,38 +233,14 @@ def decoderMurs(c,code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    ListNbBin=[]
-    if code>=8:
-      ListeNbBin.append(1)
-      code=code-8
-    else:
-      ListeNbBin.append(0)
-    
-    if code>=4:
-      ListeNbBin.append(1)
-      code=code-4
-    else:
-      ListeNbBin.append(0)
-    
-    if code>=2:
-      ListeNbBin.append(1)
-      code=code-2
-    else:
-      ListeNbBin.append(0)
+    code=bin(code).replace("0b","")
+    if len(code)==3:
+        code="0"+code
 
-    if code>=1:
-      ListeNbBin.append(1)
-      code=code-1
-    else:
-      ListeNbBin.append(0)
-
-    c["ouest"]= bool(ListeNbBin[0])
-    c["sud"]= bool(ListeNbBin[1])
-    c["est"]= bool(ListeNbBin[2])
-    c["nord"]= bool(ListeNbBin[3])
-
-
-
+    c["ouest"]= bool(int(code[0]))
+    c["sud"]= bool(int(code[1]))
+    c["est"]= bool(int(code[2]))
+    c["nord"]= bool(int(code[3]))
 
 
 def toChar(c):
@@ -300,9 +248,7 @@ def toChar(c):
     fournit le caractère semi graphique correspondant à la carte (voir la variable listeCartes au début de ce script)
     paramètres c une carte
     """
-    Caractere=listeCartes[coderMurs(c)]
-
-    return Caractere
+    return listeCartes[coderMurs(c)]
 
 
 def passageNord(carte1,carte2):
@@ -313,7 +259,7 @@ def passageNord(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["nord"]==False or carte2["sud"]==False:
+    if carte1["nord"]==False and carte2["sud"]==False:
       Valide=True
 
     return Valide
@@ -327,7 +273,7 @@ def passageSud(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["sud"]==False or carte2["nord"]==False:
+    if carte1["sud"]==False and carte2["nord"]==False:
       Valide=True
 
     return Valide
@@ -341,7 +287,7 @@ def passageOuest(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["ouest"]==False or carte2["est"]==False:
+    if carte1["ouest"]==False and carte2["est"]==False:
       Valide=True
 
     return Valide
@@ -355,7 +301,23 @@ def passageEst(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["est"]==False or carte2["ouest"]==False:
+    if carte1["est"]==False and carte2["ouest"]==False:
       Valide=True
 
     return Valide
+
+
+if __name__=="__main__":
+    carte=Carte( True, True, False, False, 1, pions=[1,2,3])
+    print(possedePion(carte,9))
+    print(carte)
+    a=prendreTresor(carte)
+    print(carte,a)
+    mettreTresor(carte,5)
+    tournerHoraire(carte)
+    print(carte)
+    b=toChar(carte)
+    print(b)
+    z=coderMurs(carte)
+    print(z)
+    decoderMurs(carte,z)
