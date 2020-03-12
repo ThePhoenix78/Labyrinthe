@@ -286,6 +286,11 @@ def decoderMurs(c,code):
     else:
       ListeNbBin.append(0)
 
+    c["ouest"]= bool(ListeNbBin[0])
+    c["sud"]= bool(ListeNbBin[1])
+    c["est"]= bool(ListeNbBin[2])
+    c["nord"]= bool(ListeNbBin[3])
+
 
 
 
