@@ -41,7 +41,7 @@ def estValide(c):
     """
     Valide=False
     NbCarte=0
-    for x, y in DictCarte.items():
+    for x, y in c.items():
         if y==True:
             NbCarte=NbCarte+1
 
@@ -56,7 +56,7 @@ def murNord(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    if DictCarte["nord"]==False:
+    if c["nord"]==False:
       PresenceMur=False
 
 
@@ -68,7 +68,7 @@ def murSud(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    if DictCarte["sud"]==False:
+    if c["sud"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -79,7 +79,7 @@ def murEst(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    if DictCarte["est"]==False:
+    if c["est"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -90,7 +90,7 @@ def murOuest(c):
     paramètre: c une carte
     """
     PresenceMur=True
-    if DictCarte["ouest"]==False:
+    if c["ouest"]==False:
       PresenceMur=False
 
     return PresenceMur
@@ -101,7 +101,7 @@ def getListePions(c):
     paramètre: c une carte
     """
 
-    return DictCarte["ListePions"]
+    return c["ListePions"]
 
 def setListePions(c,listePions):
     """
@@ -110,7 +110,7 @@ def setListePions(c,listePions):
                 listePions: la liste des pions à poser
     Cette fonction ne retourne rien mais modifie la carte
     """
-    DictCarte["ListePions"]=listePions
+    c["ListePions"]=listePions
 
 
 
@@ -128,7 +128,7 @@ def possedePion(c,pion):
                 pion un entier compris entre 1 et 4
     """
     ExistePion=True
-    if pion not in DictCarte["ListePions"]:
+    if pion not in c["ListePions"]:
       ExistePion=False
 
     return ExistePion
@@ -140,7 +140,7 @@ def getTresor(c):
     paramètre: c une carte
     """
 
-    return DictCarte["tresor"]
+    return c["tresor"]
 
 
 def prendreTresor(c):
@@ -149,8 +149,8 @@ def prendreTresor(c):
     paramètre: c une carte
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    tresor=DictCarte["tresor"]
-    DictCarte.pop("tresor")
+    tresor=c["tresor"]
+    c.pop("tresor")
 
     return tresor
 
@@ -162,8 +162,8 @@ def mettreTresor(c,tresor):
                 tresor un entier positif
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    TresorAncien=DictCarte["tresor"]
-    DictCarte["tresor"] = tresor
+    TresorAncien=c["tresor"]
+    c["tresor"] = tresor
 
 
     return TresorAncien
@@ -176,8 +176,8 @@ def prendrePion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-    if pion in DictCarte["ListePions"]:
-      DictCarte["ListePions"].remove(pion)
+    if pion in c["ListePions"]:
+      c["ListePions"].remove(pion)
     else:
       pass
 
@@ -189,8 +189,8 @@ def poserPion(c, pion):
                 pion un entier compris entre 1 et 4
     Cette fonction modifie la carte mais ne retourne rien
     """
-    if pion not in DictCarte["ListePions"]:
-      DictCarte["ListePions"].append(pion)
+    if pion not in c["ListePions"]:
+      c["ListePions"].append(pion)
     else:
       pass
 
@@ -201,11 +201,11 @@ def tournerHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    VariableNord=DictCarte["nord"]
-    DictCarte["nord"]=DictCarte["ouest"]
-    DictCarte["ouest"]=DictCarte["sud"]
-    DictCarte["sud"]=DictCarte["est"]
-    DictCarte["est"]=VariableNord
+    VariableNord=c["nord"]
+    c["nord"]=c["ouest"]
+    c["ouest"]=c["sud"]
+    c["sud"]=c["est"]
+    c["est"]=VariableNord
 
 
 def tournerAntiHoraire(c):
@@ -214,11 +214,11 @@ def tournerAntiHoraire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    VariableOuest=DictCarte["ouest"]
-    DictCarte["ouest"]=DictCarte["nord"]
-    DictCarte["nord"]=DictCarte["est"]
-    DictCarte["est"]=DictCarte["sud"]
-    DictCarte["sud"]=VariableNord
+    VariableOuest=c["ouest"]
+    c["ouest"]=c["nord"]
+    c["nord"]=c["est"]
+    c["est"]=c["sud"]
+    c["sud"]=VariableNord
 
 
 def tourneAleatoire(c):
@@ -261,8 +261,32 @@ def decoderMurs(c,code):
                code un entier codant les murs d'une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
+    ListNbBin=[]
+    if code>=8:
+      ListeNbBin.append(1)
+      code=code-8
+    else:
+      ListeNbBin.append(0)
+    
+    if code>=4:
+      ListeNbBin.append(1)
+      code=code-4
+    else:
+      ListeNbBin.append(0)
+    
+    if code>=2:
+      ListeNbBin.append(1)
+      code=code-2
+    else:
+      ListeNbBin.append(0)
 
-    pass
+    if code>=1:
+      ListeNbBin.append(1)
+      code=code-1
+    else:
+      ListeNbBin.append(0)
+
+
 
 
 
@@ -285,7 +309,7 @@ def passageNord(carte1,carte2):
     """
     Valide=False
     if carte1["nord"]==False or carte2["sud"]==False:
-        Valide=True
+      Valide=True
 
     return Valide
 
@@ -299,7 +323,7 @@ def passageSud(carte1,carte2):
     """
     Valide=False
     if carte1["sud"]==False or carte2["nord"]==False:
-        Valide=True
+      Valide=True
 
     return Valide
 
@@ -313,7 +337,7 @@ def passageOuest(carte1,carte2):
     """
     Valide=False
     if carte1["ouest"]==False or carte2["est"]==False:
-        Valide=True
+      Valide=True
 
     return Valide
 
@@ -327,6 +351,6 @@ def passageEst(carte1,carte2):
     """
     Valide=False
     if carte1["est"]==False or carte2["ouest"]==False:
-        Valide=True
+      Valide=True
 
     return Valide
