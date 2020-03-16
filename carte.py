@@ -29,9 +29,7 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     tresor est le numéro du trésor qui se trouve sur la carte (0 s'il n'y a pas de trésor)
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
-    DictCarte={"tresor":tresor,"ListePions":pions,"nord":nord,"est":est,"sud":sud,"ouest":ouest}
-
-
+    DictCarte={"nord":nord,"est":est,"sud":sud,"ouest":ouest,"ListePions":pions,"tresor":tresor}
     return DictCarte
 
 def estValide(c):
@@ -83,7 +81,6 @@ def getListePions(c):
     retourne la liste des pions se trouvant sur la carte
     paramètre: c une carte
     """
-
     return c["ListePions"]
 
 def setListePions(c,listePions):
@@ -216,11 +213,23 @@ def coderMurs(c):
     retourne un entier indice du caractère semi-graphique de la carte
     """
     val=""
-    for x in c.values():
-        if x==True:
-            val+="1"
-        elif x==False:
-            val+="0"
+    if murOuest(c):
+        val+="1"
+    else:
+        val+="0"
+    if murSud(c):
+        val+="1"
+    else:
+        val+="0"
+    if murEst(c):
+        val+="1"
+    else:
+        val+="0"
+    if murNord(c):
+        val+="1"
+    else:
+        val+="0"
+
     val = int(val,2)
 
     return val
@@ -259,7 +268,7 @@ def passageNord(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["nord"]==False and carte2["sud"]==False:
+    if murNord(carte1)==False and  murSud(carte2)==False:
       Valide=True
 
     return Valide
@@ -273,7 +282,7 @@ def passageSud(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["sud"]==False and carte2["nord"]==False:
+    if murSud(carte1)==False and murNord(carte2)==False:
       Valide=True
 
     return Valide
@@ -287,7 +296,7 @@ def passageOuest(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["ouest"]==False and carte2["est"]==False:
+    if murOuest(carte1)==False and murEst(carte2)==False:
       Valide=True
 
     return Valide
@@ -301,7 +310,7 @@ def passageEst(carte1,carte2):
     résultat un booléen
     """
     Valide=False
-    if carte1["est"]==False and carte2["ouest"]==False:
+    if murEst(carte1)==False and murOuest(carte2)==False:
       Valide=True
 
     return Valide

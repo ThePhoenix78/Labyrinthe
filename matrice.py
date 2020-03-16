@@ -128,17 +128,16 @@ def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
     résultat: la valeur de la case "ejectée" par le décalage
     """
     eject=matrice[-1][numCol]
-    val = [matrice[i][numCol] for i in range(len(matrice))]
-    for i in range(len(val)):
-        matrice[i][numCol]=val[i-1]
+    for i in range(-1,-len(matrice),-1):
+        matrice[i][numCol]=matrice[i-1][numCol]
     matrice[0][numCol]=nouvelleValeur
     return eject
 
 if __name__=="__main__":
     mat=[[10,20,30,40],[11,21,31,41],[12,22,32,42],[13,23,33,43]]
-    decalageColonneEnHaut(mat,3,99)
+    #decalageColonneEnHaut(mat,3,999)
     decalageColonneEnBas(mat,2,99)
-    decalageLigneADroite(mat,2,99)
-    decalageLigneAGauche(mat,1,99)
+    #decalageLigneADroite(mat,2,99)
+    #decalageLigneAGauche(mat,1,99)
     for ligne in mat:
         print(ligne)

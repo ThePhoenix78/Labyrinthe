@@ -22,8 +22,18 @@ def Plateau(nbJoueurs, nbTresors):
                 ont été placée de manière aléatoire
               - la carte amovible qui n'a pas été placée sur le plateau
     """
-    pass
 
+    inc=0
+    matrice=Matrice(7,7)
+    lig=getNbLignes(matrice)
+    col=getNbColonnes(matrice)
+    cartes=creerCartesAmovibles(1,nbTresors)
+    for i in range(lig):
+        for j in range(col):
+            setVal(matrice,i,j,cartes[inc])
+            inc+=1
+
+    return matrice,cartes[-1]
 
 
 def creerCartesAmovibles(tresorDebut,nbTresors):
@@ -35,7 +45,20 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
                 nbTresors: le nombre total de trésor à créer
     résultat: la liste mélangée aléatoirement des cartes amovibles créees
     """
-    pass
+    liste=[]
+    boolean=[False,True]
+    i=0
+    while i<nbTresors:
+        nord=boolean[random.randint(0,1)]
+        sud=boolean[random.randint(0,1)]
+        est=boolean[random.randint(0,1)]
+        ouest=boolean[random.randint(0,1)]
+        val=Carte(nord,est,sud,ouest)
+        if estValide(val):
+            liste.append(val)
+            i+=1
+
+    return liste
 
 def prendreTresorPlateau(plateau,lig,col,numTresor):
     """
@@ -48,7 +71,8 @@ def prendreTresorPlateau(plateau,lig,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     resultat: un booléen indiquant si le trésor était bien sur la carte considérée
     """
-    pass
+    val=getTresor(plateau[lig][col])
+    return val==numTresor
 
 def getCoordonneesTresor(plateau,numTresor):
     """
@@ -58,7 +82,12 @@ def getCoordonneesTresor(plateau,numTresor):
     resultat: un couple d'entier donnant les coordonnées du trésor ou None si
               le trésor n'est pas sur le plateau
     """
-    pass
+    for i in range(len(plateau)):
+        for j in range(len(plateau[i])):
+            val = getTresor(plateau[i][j])
+            if val==numTresor:
+                return i,j
+    return None
 
 def getCoordonneesJoueur(plateau,numJoueur):
     """
@@ -68,7 +97,12 @@ def getCoordonneesJoueur(plateau,numJoueur):
     resultat: un couple d'entier donnant les coordonnées du joueur ou None si
               le joueur n'est pas sur le plateau
     """
-    pass
+    for i in range(len(plateau)):
+        for j in range(len(plateau[i])):
+            val = possedePion(plateau[i][j],numJoueur)
+            if val:
+                return i,j
+    return None
 
 def prendrePionPlateau(plateau,lin,col,numJoueur):
     """
@@ -79,7 +113,11 @@ def prendrePionPlateau(plateau,lin,col,numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
+    val=getVal(plateau,lin,col)
+    if possedePion(val,numJoueur):
+        prendrePion(val,numJoueur)
+
+
 def poserPionPlateau(plateau,lin,col,numJoueur):
     """
     met le pion du joueur sur la carte qui se trouve en (lig,col) du plateau
@@ -89,8 +127,9 @@ def poserPionPlateau(plateau,lin,col,numJoueur):
                 numJoueur: le numéro du joueur qui correspond au pion
     Cette fonction ne retourne rien mais elle modifie le plateau
     """
-    pass
-
+    val=getVal(plateau,lin,col)
+    if not possedePion(val,numJoueur):
+        poserPion(val,numJoueur)
 
 def accessible(plateau,ligD,colD,ligA,colA):
     """
@@ -103,7 +142,120 @@ def accessible(plateau,ligD,colD,ligA,colA):
     résultat: un boolean indiquant s'il existe un chemin entre la case de départ
               et la case d'arrivée
     """
-    pass
+    ligne=getNbLignes(plateau)
+    colone=getNbColonnes(plateau)
+    suivant=getVal(plateau,ligD,colD)
+    arrive=getVal(plateau,ligA,colA)
+
+    lig=ligD
+    col=colD
+
+    nord=None
+    sud=None
+    est=None
+    ouest=None
+
+    inc=0
+
+    cheN=0
+    cheS=0
+    cheE=0
+    cheO=0
+
+    prec=""
+
+    while inc<10:
+
+        if lig-1>0 and prec!="sud":
+            lig-=1
+            val=getVal(plateau,lig,col)
+            nord=passageNord(suivant,val)
+            if nord:
+                print("nord")
+                prec="nord"
+                suivant=val
+                cheN+=1
+                if lig==ligA and col==colA:
+                    return True
+                continue
+            else:
+                lig+=1
+
+        if lig+1<colone and prec!="nord":
+            lig+=1
+            val=getVal(plateau,lig,col)
+            sud=passageSud(suivant,val)
+            if sud:
+                print("sud")
+                prec="sud"
+                suivant=val
+                cheS+=1
+                if lig==ligA and col==colA:
+                    return True
+                continue
+            else:
+                lig-=1
+
+        if col+1<ligne and prec!="ouest":
+            col+=1
+            val=getVal(plateau,lig,col)
+            est=passageEst(suivant,val)
+            if est:
+                print("est")
+                prec="est"
+                suivant=val
+                cheE+=1
+                if lig==ligA and col==colA:
+                    return True
+                continue
+            else:
+                col-=1
+
+        if col-1>0 and prec!="est":
+            col-=1
+            val=getVal(plateau,lig,col)
+            ouest=passageOuest(suivant,val)
+            if ouest:
+                print("ouest")
+                test=True
+                prec="ouest"
+                suivant=val
+                cheO+=1
+                if lig==ligA and col==colA:
+                    return True
+                continue
+            else:
+                col+=1
+
+        if prec=="nord" and cheN>0:
+            lig+=1
+            cheN-=1
+            prec="sud"
+            print("sud",1)
+        elif prec=="sud" and cheS>0:
+            lig-=1
+            cheS-=1
+            prec="nord"
+            print("nord",1)
+        elif prec=="est" and cheE>0:
+            col-=1
+            cheE-=1
+            prec="ouest"
+            print("ouest",1)
+        elif prec=="ouest" and cheO>0:
+            col+=1
+            cheO-=1
+            prec="est"
+            print("est",1)
+        else:
+            prec=""
+
+
+        inc+=1
+
+
+
+    return False
 
 def accessibleDist(plateau,ligD,colD,ligA,colA):
     """
@@ -119,4 +271,14 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     résultat: une liste de coordonées indiquant un chemin possible entre la case
               de départ et la case d'arrivée
     """
-    pass
+    return
+
+if __name__=="__main__":
+    plat=Plateau(4,50)
+    print(accessible(plat[0],0,0,0,6))
+    mat=Matrice(7,7)
+    for i in range(len(plat[0])):
+        for j in range(len(plat[0])):
+            mat[i][j]=listeCartes[coderMurs(plat[0][i][j])]
+    for ligne in mat:
+        print(ligne)
