@@ -123,8 +123,8 @@ def prendreTresor(c):
     paramètre: c une carte
     résultat l'entier représentant le trésor qui était sur la carte
     """
-    tresor=c.pop("tresor")
-    c["tresor"]=None
+    tresor=c["tresor"]
+    c["tresor"]=0
     return tresor
 
 
@@ -195,7 +195,7 @@ def tourneAleatoire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    alea=random.randint(1,10)
+    alea=random.randint(1,3)
     for i in range(alea):
         tournerHoraire(c)
 
@@ -230,9 +230,7 @@ def coderMurs(c):
     else:
         val+="0"
 
-    val = int(val,2)
-
-    return val
+    return int(val,2)
 
 
 def decoderMurs(c,code):
@@ -243,8 +241,7 @@ def decoderMurs(c,code):
     Cette fonction modifie la carte mais ne retourne rien
     """
     code=bin(code).replace("0b","")
-    if len(code)==3:
-        code="0"+code
+    code="0"*(4-len(code))+code
 
     c["ouest"]= bool(int(code[0]))
     c["sud"]= bool(int(code[1]))
@@ -267,11 +264,8 @@ def passageNord(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    Valide=False
-    if murNord(carte1)==False and  murSud(carte2)==False:
-      Valide=True
 
-    return Valide
+    return not (murNord(carte1) or murSud(carte2))
 
 
 def passageSud(carte1,carte2):
@@ -281,11 +275,7 @@ def passageSud(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    Valide=False
-    if murSud(carte1)==False and murNord(carte2)==False:
-      Valide=True
-
-    return Valide
+    return not (murSud(carte1) or murNord(carte2))
 
 
 def passageOuest(carte1,carte2):
@@ -295,11 +285,7 @@ def passageOuest(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    Valide=False
-    if murOuest(carte1)==False and murEst(carte2)==False:
-      Valide=True
-
-    return Valide
+    return not (murOuest(carte1) or murEst(carte2))
 
 
 def passageEst(carte1,carte2):
@@ -309,16 +295,20 @@ def passageEst(carte1,carte2):
     paramètres carte1 et carte2 deux cartes
     résultat un booléen
     """
-    Valide=False
-    if murEst(carte1)==False and murOuest(carte2)==False:
-      Valide=True
 
-    return Valide
+    return not (murEst(carte1) or murOuest(carte2))
 
 
 if __name__=="__main__":
     carte=Carte( True, True, False, False, 1, pions=[1,2,3])
+    carte2=Carte( False, True, False, True, 2, pions=[1,2,9])
     print(possedePion(carte,9))
+    print("-------")
+    print(passageEst(carte,carte2))
+    print(passageOuest(carte,carte2))
+    print(passageNord(carte,carte2))
+    print(passageSud(carte,carte2))
+    print("-------")
     print(carte)
     a=prendreTresor(carte)
     print(carte,a)

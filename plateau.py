@@ -27,11 +27,37 @@ def Plateau(nbJoueurs, nbTresors):
     matrice=Matrice(7,7)
     lig=getNbLignes(matrice)
     col=getNbColonnes(matrice)
+    val=lig*col
+    val-=int(val/(int(lig/2)+int(col/2))*2)-5
+    print(val,int(lig/2))
+
+
     cartes=creerCartesAmovibles(1,nbTresors)
     for i in range(lig):
         for j in range(col):
-            setVal(matrice,i,j,cartes[inc])
-            inc+=1
+            if i==j==0:
+                setVal(matrice,i,j,Carte(True,False,False,True))
+            elif i==0 and j==col-1:
+                setVal(matrice,i,j,Carte(True,True,False,False))
+            elif i==lig-1 and j==0:
+                setVal(matrice,i,j,Carte(False,False,True,True))
+            elif i==lig-1 and j==col-1:
+                setVal(matrice,i,j,Carte(False,True,True,False))
+
+            elif i==0 and j%2==0:
+                setVal(matrice,i,j,Carte(True,False,False,False))
+            elif i==lig-1 and j%2==0:
+                setVal(matrice,i,j,Carte(False,False,True,False))
+
+            elif i%2==0 and j==0:
+                setVal(matrice,i,j,Carte(False,False,False,True))
+            elif i%2==0 and j==col-1:
+                setVal(matrice,i,j,Carte(False,True,False,False))
+
+            else:
+                setVal(matrice,i,j,Carte(True,True,True,True))
+                inc+=1
+    print(inc)
 
     return matrice,cartes[-1]
 
@@ -144,6 +170,7 @@ def accessible(plateau,ligD,colD,ligA,colA):
     """
     ligne=getNbLignes(plateau)
     colone=getNbColonnes(plateau)
+
     suivant=getVal(plateau,ligD,colD)
     arrive=getVal(plateau,ligA,colA)
 
@@ -157,103 +184,69 @@ def accessible(plateau,ligD,colD,ligA,colA):
 
     inc=0
 
-    cheN=0
-    cheS=0
-    cheE=0
-    cheO=0
-
-    prec=""
+    #nord=passageNord(suivant,val)
+    #sud=passageSud(suivant,val)
+    #est=passageEst(suivant,val)
+    #ouest=passageOuest(suivant,val)
+    matrice=Matrice(ligne,colone)
+    #matrice=(i for i in matrice[i][j])
+    print(matrice)
+    listeche=[]
 
     while inc<10:
 
-        if lig-1>0 and prec!="sud":
-            lig-=1
-            val=getVal(plateau,lig,col)
+        if lig-1>0:
+            #lig-=1
+            val=getVal(plateau,lig-1,col)
             nord=passageNord(suivant,val)
             if nord:
                 print("nord")
-                prec="nord"
-                suivant=val
-                cheN+=1
+                listeche.append(val)
                 if lig==ligA and col==colA:
                     return True
-                continue
+
             else:
                 lig+=1
 
-        if lig+1<colone and prec!="nord":
-            lig+=1
-            val=getVal(plateau,lig,col)
+        if lig+1<colone:
+            #lig+=1
+            val=getVal(plateau,lig+1,col)
             sud=passageSud(suivant,val)
             if sud:
                 print("sud")
-                prec="sud"
-                suivant=val
-                cheS+=1
+                listeche.append(val)
                 if lig==ligA and col==colA:
                     return True
-                continue
+
             else:
                 lig-=1
 
-        if col+1<ligne and prec!="ouest":
-            col+=1
-            val=getVal(plateau,lig,col)
+        if col+1<ligne:
+            #col+=1
+            val=getVal(plateau,lig,col+1)
             est=passageEst(suivant,val)
             if est:
                 print("est")
-                prec="est"
-                suivant=val
-                cheE+=1
+                listeche.append(val)
                 if lig==ligA and col==colA:
                     return True
-                continue
+
             else:
                 col-=1
 
-        if col-1>0 and prec!="est":
-            col-=1
-            val=getVal(plateau,lig,col)
+        if col-1>0:
+            #col-=1
+            val=getVal(plateau,lig,col-1)
             ouest=passageOuest(suivant,val)
             if ouest:
                 print("ouest")
-                test=True
-                prec="ouest"
-                suivant=val
-                cheO+=1
+                listeche.append(val)
                 if lig==ligA and col==colA:
                     return True
-                continue
             else:
                 col+=1
 
-        if prec=="nord" and cheN>0:
-            lig+=1
-            cheN-=1
-            prec="sud"
-            print("sud",1)
-        elif prec=="sud" and cheS>0:
-            lig-=1
-            cheS-=1
-            prec="nord"
-            print("nord",1)
-        elif prec=="est" and cheE>0:
-            col-=1
-            cheE-=1
-            prec="ouest"
-            print("ouest",1)
-        elif prec=="ouest" and cheO>0:
-            col+=1
-            cheO-=1
-            prec="est"
-            print("est",1)
-        else:
-            prec=""
-
-
         inc+=1
-
-
 
     return False
 
@@ -275,8 +268,10 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
 if __name__=="__main__":
     plat=Plateau(4,50)
-    print(accessible(plat[0],0,0,0,6))
-    mat=Matrice(7,7)
+    #print(accessible(plat[0],0,0,0,6))
+    lig=getNbLignes(plat[0])
+    col=getNbColonnes(plat[0])
+    mat=Matrice(lig,col)
     for i in range(len(plat[0])):
         for j in range(len(plat[0])):
             mat[i][j]=listeCartes[coderMurs(plat[0][i][j])]
