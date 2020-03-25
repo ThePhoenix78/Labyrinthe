@@ -23,16 +23,13 @@ def Plateau(nbJoueurs, nbTresors):
               - la carte amovible qui n'a pas été placée sur le plateau
     """
 
-    inc=0
     matrice=Matrice(7,7)
     lig=getNbLignes(matrice)
     col=getNbColonnes(matrice)
     val=lig*col
     val-=int(val/(int(lig/2)+int(col/2))*2)-5
-    print(val,int(lig/2))
 
-
-    cartes=creerCartesAmovibles(1,nbTresors)
+    cartes=creerCartesAmovibles(1,20)
     for i in range(lig):
         for j in range(col):
             if i==j==0:
@@ -55,11 +52,9 @@ def Plateau(nbJoueurs, nbTresors):
                 setVal(matrice,i,j,Carte(False,True,False,False))
 
             else:
-                setVal(matrice,i,j,Carte(True,True,True,True))
-                inc+=1
-    print(inc)
+                setVal(matrice,i,j,cartes.pop(0))
 
-    return matrice,cartes[-1]
+    return matrice,cartes.pop()
 
 
 def creerCartesAmovibles(tresorDebut,nbTresors):
@@ -71,18 +66,33 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
                 nbTresors: le nombre total de trésor à créer
     résultat: la liste mélangée aléatoirement des cartes amovibles créees
     """
+
     liste=[]
-    boolean=[False,True]
-    i=0
-    while i<nbTresors:
-        nord=boolean[random.randint(0,1)]
-        sud=boolean[random.randint(0,1)]
-        est=boolean[random.randint(0,1)]
-        ouest=boolean[random.randint(0,1)]
-        val=Carte(nord,est,sud,ouest)
-        if estValide(val):
-            liste.append(val)
-            i+=1
+
+    for i in range(16):
+        carte=Carte(True,True,False,False)
+        tourneAleatoire(carte)
+        liste.append(carte)
+
+    for i in range(12):
+        carte=Carte(True,False,True,False)
+        tourneAleatoire(carte)
+        liste.append(carte)
+
+    for i in range(10):
+        carte=Carte(True,False,False,False)
+        tourneAleatoire(carte)
+        liste.append(carte)
+
+    random.shuffle(liste)
+
+    mettreTresor(liste[0],tresorDebut)
+
+    for i in range(tresorDebut,nbTresors):
+        mettreTresor(liste[1+i],i)
+        i+=1
+
+    random.shuffle(liste)
 
     return liste
 
@@ -177,76 +187,54 @@ def accessible(plateau,ligD,colD,ligA,colA):
     lig=ligD
     col=colD
 
-    nord=None
-    sud=None
-    est=None
-    ouest=None
-
-    inc=0
 
     #nord=passageNord(suivant,val)
     #sud=passageSud(suivant,val)
     #est=passageEst(suivant,val)
     #ouest=passageOuest(suivant,val)
     matrice=Matrice(ligne,colone)
-    #matrice=(i for i in matrice[i][j])
-    print(matrice)
+
+    inc=0
+    for i in range(ligne):
+        for j in range(colone):#test2
+            setVal(matrice,i,j,(inc))
+            inc+=1
+
+        print(matrice[i])
+
     listeche=[]
 
-    while inc<10:
+    for i in range(inc):
 
-        if lig-1>0:
+        if inc:
             #lig-=1
             val=getVal(plateau,lig-1,col)
             nord=passageNord(suivant,val)
             if nord:
-                print("nord")
                 listeche.append(val)
-                if lig==ligA and col==colA:
-                    return True
-
-            else:
-                lig+=1
 
         if lig+1<colone:
             #lig+=1
             val=getVal(plateau,lig+1,col)
             sud=passageSud(suivant,val)
             if sud:
-                print("sud")
                 listeche.append(val)
-                if lig==ligA and col==colA:
-                    return True
-
-            else:
-                lig-=1
 
         if col+1<ligne:
-            #col+=1
             val=getVal(plateau,lig,col+1)
             est=passageEst(suivant,val)
             if est:
-                print("est")
-                listeche.append(val)
-                if lig==ligA and col==colA:
-                    return True
 
-            else:
-                col-=1
+                listeche.append(val)
 
         if col-1>0:
             #col-=1
             val=getVal(plateau,lig,col-1)
             ouest=passageOuest(suivant,val)
             if ouest:
-                print("ouest")
                 listeche.append(val)
-                if lig==ligA and col==colA:
-                    return True
-            else:
-                col+=1
 
-        inc+=1
+
 
     return False
 
@@ -277,3 +265,5 @@ if __name__=="__main__":
             mat[i][j]=listeCartes[coderMurs(plat[0][i][j])]
     for ligne in mat:
         print(ligne)
+
+    accessible(plat[0],0,5,3,4)
