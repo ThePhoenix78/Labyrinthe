@@ -25,7 +25,12 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
                 nbTresorMax le nombre de trésors maximum distribué à chaque joueur
     résultat: le labyrinthe crée
     """
-    return
+    joueurs=listeJoueurs(nomsJoueurs)
+    distribuerTresors(joueurs,nbTresors,nbTresorMax)
+
+
+    labyrinthe={"joueurs":joueurs,"tresors":nbTresorsMax}
+    return labyrinthe
 
 def getPlateau(labyrinthe):
     """
@@ -33,7 +38,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    return
+    return Plateau()
 
 def getNbParticipants(labyrinthe):
     """

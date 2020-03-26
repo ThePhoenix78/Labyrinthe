@@ -18,11 +18,9 @@ def ListeJoueurs(nomsJoueurs):
     paramètre: nomsJoueurs une liste de chaines de caractères
     résultat: la liste des joueurs avec un joueur courant mis à 0
     """
-    listeDesJoueurs={}
-    listeDesJoueurs["joueurs"]=[]
+    listeDesJoueurs={"joueurs":[],"courant":0}
     for nom in nomsJoueurs:
         listeDesJoueurs["joueurs"].append(Joueur(nom))
-    listeDesJoueurs["courant"]=0
 
     return listeDesJoueurs
 
@@ -42,7 +40,7 @@ def initAleatoireJoueurCourant(joueurs):
     paramètre: joueurs un liste de joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    val=getNbJoueurs()
+    val=getNbJoueurs(joueurs)
     joueurs["courant"]=random.randint(0,val)
 
 def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
@@ -57,18 +55,17 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
                              de trésor possible
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    joueurs=joueurs["joueurs"]
     val=getNbJoueurs(joueurs)
+    joueurs=joueurs["joueurs"]
     if nbTresorMax==0:
         nbTresorMax=int(nbTresors/val)
 
     liste=[k for k in range(1,nbTresors+1)]
     random.shuffle(liste)
-    i=0
-    for j in range(val):
-        while i<nbTresorMax*(j+1):
-            ajouterTresor(joueurs[j],int(liste[i]))
-            i+=1
+
+    for jou in joueurs:
+        for t in range(nbTresorMax):
+            ajouterTresor(jou,liste.pop())
 
 
 
@@ -82,7 +79,7 @@ def changerJoueurCourant(joueurs):
     val+=1
     if joueurs["courant"]>=val:
         val=0
-    pass
+
 
 def getNbJoueurs(joueurs):
     """
@@ -180,14 +177,13 @@ def joueurCourantAFini(joueurs):
     test = nbTresorsRestantsJoueur(joueurs,val)
     if test!=0:
         return False
-    else:
-        return True
+    return True
 
 if __name__ == "__main__":
     j=ListeJoueurs(["a","b","c","d"])
     distribuerTresors(j)
-    v=prochainTresorJoueur(j,2)
-    w=nbTresorsRestantsJoueur(j,1)
-    x=getJoueurCourant(j)
-    y=nomJoueur(j,1)
-    print(j,v,w,x,y)
+    #v=prochainTresorJoueur(j,2)
+    #w=nbTresorsRestantsJoueur(j,1)
+    #x=getJoueurCourant(j)
+    #y=nomJoueur(j,1)
+    print(j)#,v,w,x,y)

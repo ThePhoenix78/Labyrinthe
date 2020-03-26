@@ -15,9 +15,7 @@ def Joueur(nom):
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
-    NouvJoueur={}
-    NouvJoueur["nom"]=nom
-    NouvJoueur["tresor"]=[]
+    NouvJoueur={"nom":nom,"tresor":[]}
 
     return NouvJoueur
 
