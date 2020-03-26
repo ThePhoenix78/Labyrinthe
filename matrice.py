@@ -82,8 +82,7 @@ def decalageLigneAGauche(matrice, numLig, nouvelleValeur=0):
     résultat la valeur qui a été ejectée lors du décalage
     """
     matrice[numLig].append(nouvelleValeur)
-    eject=matrice[numLig].pop(0)
-    return eject
+    return matrice[numLig].pop(0)
 
 
 def decalageLigneADroite(matrice, numLig, nouvelleValeur=0):
@@ -95,11 +94,8 @@ def decalageLigneADroite(matrice, numLig, nouvelleValeur=0):
                  nouvelleValeur la valeur à placer
     résultat: la valeur de la case "ejectée" par le décalage
     """
-    nouvelleValeur=[nouvelleValeur]
-    nouvelleValeur.extend(matrice[numLig])
-    matrice[numLig]=nouvelleValeur
-    eject=matrice[numLig].pop()
-    return eject
+    matrice[numLig].insert(0,nouvelleValeur)
+    return matrice[numLig].pop()
 
 
 def decalageColonneEnHaut(matrice, numCol, nouvelleValeur=0):
@@ -117,6 +113,7 @@ def decalageColonneEnHaut(matrice, numCol, nouvelleValeur=0):
         matrice[i][numCol]=matrice[i+1][numCol]
     matrice[-1][numCol]=nouvelleValeur
     return eject
+
 
 def decalageColonneEnBas(matrice, numCol, nouvelleValeur=0):
     """
@@ -137,7 +134,8 @@ if __name__=="__main__":
     mat=[[10,20,30,40],[11,21,31,41],[12,22,32,42],[13,23,33,43]]
     #decalageColonneEnHaut(mat,3,999)
     decalageColonneEnBas(mat,2,99)
-    #decalageLigneADroite(mat,2,99)
+    a=decalageLigneADroite(mat,2,99)
+    print(a)
     #decalageLigneAGauche(mat,1,99)
     for ligne in mat:
         print(ligne)

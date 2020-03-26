@@ -29,7 +29,7 @@ def Plateau(nbJoueurs, nbTresors):
     val=lig*col
     val-=int(val/(int(lig/2)+int(col/2))*2)-5
 
-    cartes=creerCartesAmovibles(1,20)
+    cartes=creerCartesAmovibles(1,nbTresors)
     for i in range(lig):
         for j in range(col):
             if i==j==0:
@@ -89,7 +89,7 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
     mettreTresor(liste[0],tresorDebut)
 
     for i in range(tresorDebut,nbTresors):
-        mettreTresor(liste[1+i],i)
+        mettreTresor(liste[i],i)
         i+=1
 
     random.shuffle(liste)
@@ -181,60 +181,39 @@ def accessible(plateau,ligD,colD,ligA,colA):
     ligne=getNbLignes(plateau)
     colone=getNbColonnes(plateau)
 
-    suivant=getVal(plateau,ligD,colD)
-    arrive=getVal(plateau,ligA,colA)
-
-    lig=ligD
-    col=colD
-
-
-    #nord=passageNord(suivant,val)
-    #sud=passageSud(suivant,val)
-    #est=passageEst(suivant,val)
-    #ouest=passageOuest(suivant,val)
     matrice=Matrice(ligne,colone)
 
-    inc=0
-    for i in range(ligne):
-        for j in range(colone):#test2
-            setVal(matrice,i,j,(inc))
-            inc+=1
+    setVal(matrice,ligD,colD,1)
 
-        print(matrice[i])
+    for lig in range(ligne):
+        for col in range(colone):
+            if getVal(matrice,lig,col)==1:
 
-    listeche=[]
+                case=getVal(plateau,lig,col)
+                setVal(matrice,lig,col,2)
 
-    for i in range(inc):
+                if lig-1>0:
+                    val=getVal(plateau,lig-1,col)
+                    if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                        setVal(matrice,lig-1,col,1)
 
-        if inc:
-            #lig-=1
-            val=getVal(plateau,lig-1,col)
-            nord=passageNord(suivant,val)
-            if nord:
-                listeche.append(val)
+                if lig+1<colone:
+                    val=getVal(plateau,lig+1,col)
+                    if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                        setVal(matrice,lig+1,col,1)
 
-        if lig+1<colone:
-            #lig+=1
-            val=getVal(plateau,lig+1,col)
-            sud=passageSud(suivant,val)
-            if sud:
-                listeche.append(val)
+                if col+1<ligne:
+                    val=getVal(plateau,lig,col+1)
+                    if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                        setVal(matrice,lig,col+1,1)
 
-        if col+1<ligne:
-            val=getVal(plateau,lig,col+1)
-            est=passageEst(suivant,val)
-            if est:
+                if col-1>0:
+                    val=getVal(plateau,lig,col-1)
+                    if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                        setVal(matrice,lig,col-1,1)
 
-                listeche.append(val)
-
-        if col-1>0:
-            #col-=1
-            val=getVal(plateau,lig,col-1)
-            ouest=passageOuest(suivant,val)
-            if ouest:
-                listeche.append(val)
-
-
+            if getVal(matrice,ligA,colA)==1:
+                return True
 
     return False
 
@@ -252,18 +231,71 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     résultat: une liste de coordonées indiquant un chemin possible entre la case
               de départ et la case d'arrivée
     """
-    return
+    ligne=getNbLignes(plateau)
+    colone=getNbColonnes(plateau)
+
+    matrice=Matrice(ligne,colone)
+
+    setVal(matrice,ligD,colD,1)
+
+    liste=[]
+
+    for lig in range(ligne):
+        for col in range(colone):
+            if getVal(matrice,lig,col)==1:
+
+                case=getVal(plateau,lig,col)
+                setVal(matrice,lig,col,2)
+                liste.append((lig,col))
+
+                if lig-1>0:
+                    val=getVal(plateau,lig-1,col)
+                    if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                        setVal(matrice,lig-1,col,1)
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig-1,col))
+                            return liste
+
+                if lig+1<colone:
+                    val=getVal(plateau,lig+1,col)
+                    if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                        setVal(matrice,lig+1,col,1)
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig+1,col))
+                            return liste
+
+
+                if col+1<ligne:
+                    val=getVal(plateau,lig,col+1)
+                    if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                        setVal(matrice,lig,col+1,1)
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col+1))
+                            return liste
+
+
+                if col-1>0:
+                    val=getVal(plateau,lig,col-1)
+                    if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                        setVal(matrice,lig,col-1,1)
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col-1))
+                            return liste
+
+    return None
 
 if __name__=="__main__":
-    plat=Plateau(4,50)
-    #print(accessible(plat[0],0,0,0,6))
+    plat=Plateau(4,30)
     lig=getNbLignes(plat[0])
     col=getNbColonnes(plat[0])
     mat=Matrice(lig,col)
-    for i in range(len(plat[0])):
-        for j in range(len(plat[0])):
-            mat[i][j]=listeCartes[coderMurs(plat[0][i][j])]
+    for i in range(lig):
+        for j in range(col):
+            setVal(mat,i,j,listeCartes[coderMurs(plat[0][i][j])])
     for ligne in mat:
         print(ligne)
 
-    accessible(plat[0],0,5,3,4)
+    a=accessible(plat[0],0,0,3,3)
+    if a:
+        b=accessibleDist(plat[0],0,0,0,1)
+        print(b)

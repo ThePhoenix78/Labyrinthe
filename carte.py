@@ -195,7 +195,7 @@ def tourneAleatoire(c):
     paramètres: c une carte
     Cette fonction modifie la carte mais ne retourne rien
     """
-    alea=random.randint(1,3)
+    alea=random.randint(0,3)
     for i in range(alea):
         tournerHoraire(c)
 
