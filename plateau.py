@@ -91,7 +91,7 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
 
     for i in range(tresorDebut,nbTresors):
         mettreTresor(liste[i],i)
-        i+=1
+
 
     random.shuffle(liste)
 
@@ -242,42 +242,62 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     liste=[]
     pasArrive=True
 
-    while pasArrive:
-        for lig in range(ligne):
-            for col in range(colone):
-                if getVal(matrice,lig,col)==1:
+    test=accessible(plateau,ligD,colD,ligA,colA)
+    if not test:
+        return None
 
-                    case=getVal(plateau,lig,col)
-                    setVal(matrice,lig,col,2)
-                    liste.append((lig,col))
+    for lig in range(ligne):
+        for col in range(colone):
+            if getVal(matrice,lig,col)==1:
 
-                    if lig-1>0:
-                        val=getVal(plateau,lig-1,col)
-                        if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
-                            setVal(matrice,lig-1,col,1)
+                case=getVal(plateau,lig,col)
+                setVal(matrice,lig,col,2)
+                liste.append((lig,col))
 
 
-                    if lig+1<colone:
-                        val=getVal(plateau,lig+1,col)
-                        if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
-                            setVal(matrice,lig+1,col,1)
+                if lig-1>0:
+                    val=getVal(plateau,lig-1,col)
+                    if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                        setVal(matrice,lig-1,col,1)
+
+
+                if lig+1<colone:
+                    val=getVal(plateau,lig+1,col)
+                    if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                        setVal(matrice,lig+1,col,1)
+
+
+                if col+1<ligne:
+                    val=getVal(plateau,lig,col+1)
+                    if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                        setVal(matrice,lig,col+1,1)
+
+
+                if col-1>0:
+                    val=getVal(plateau,lig,col-1)
+                    if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                        setVal(matrice,lig,col-1,1)
+
+            if getVal(matrice,ligA,colA)==1:
+                break
+        if getVal(matrice,ligA,colA)==1:
+            break
+
+
+    chemin=[]
+
+    print(liste)
+
+    for i in range(len(liste)):
+        for j in range(len(liste)):
+            if liste[i][j][0]:
+                pass
 
 
 
-                    if col+1<ligne:
-                        val=getVal(plateau,lig,col+1)
-                        if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
-                            setVal(matrice,lig,col+1,1)
+    if chemin:
+        return chemin
 
-                    if col-1>0:
-                        val=getVal(plateau,lig,col-1)
-                        if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
-                            setVal(matrice,lig,col-1,1)
-
-                    if getVal(matrice,ligA,colA)==1:
-                        return liste
-
-    return None
 
 if __name__=="__main__":
     plat=Plateau(4,30)
@@ -290,7 +310,8 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
 
-    a=accessible(plat[0],0,0,3,3)
-    if a:
-        b=accessibleDist(plat[0],0,0,3,3)
-        print(b)
+
+    print(getTresor(plat[0][0][3]))
+
+    b=accessibleDist(plat[0],0,0,3,3)
+    print(b)
