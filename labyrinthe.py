@@ -33,9 +33,10 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
 
     joueurs=ListeJoueurs(nomsJoueurs)
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
+    val=getNbJoueurs(joueurs)
+    plateau=Plateau(val,nbTresors)
 
-
-    labyrinthe={"listeJoueurs":joueurs,"tresors":nbTresors}
+    labyrinthe={"listeJoueurs":joueurs,"tresors":nbTresors,"plateau":plateau}
 
 
     return labyrinthe
@@ -46,8 +47,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    nbj=getNbJoueurs(labyrinthe["listeJoueurs"])
-    return Plateau(nbj,labyrinthe["tresors"])
+    return labyrinthe["plateau"]
 
 def getNbParticipants(labyrinthe):
     """
@@ -105,7 +105,7 @@ def getListeJoueurs(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: les joueurs sous la forme de la structure implémentée dans listeJoueurs.py
     """
-    return 
+    return labyrinthe["listeJoueurs"]
 
 
 def enleverTresor(labyrinthe,lin,col,numTresor):
@@ -119,6 +119,7 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
+
     pass
 
 def prendreJoueurCourant(labyrinthe,lin,col):
@@ -130,7 +131,10 @@ def prendreJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
+    prendrePionPlateau(labyrinthe["plateau"],lin,col,joueur)
+
+
 def poserJoueurCourant(labyrinthe,lin,col):
     """
     pose le joueur courant sur la case lin,col du plateau
@@ -139,7 +143,8 @@ def poserJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
+    poserPionPlateau(labyrinthe["plateau"],lin,col,joueur)
 
 def getCarteAJouer(labyrinthe):
     """
@@ -148,6 +153,8 @@ def getCarteAJouer(labyrinthe):
     résultat: la carte à jouer
     """
     pass
+
+
 def coupInterdit(labyrinthe,direction,rangee):
     """
     retourne True si le coup proposé correspond au coup interdit
@@ -172,7 +179,6 @@ def jouerCarte(labyrinthe,direction,rangee):
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
     pass
-
 
 
 
@@ -242,7 +248,7 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    joueur = getJoueurCourant()
+    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
     #val = getCoordonneesJoueur(,joueur)
     #return accessibleDist(,val[0],val[1],ligA,colA)
 
