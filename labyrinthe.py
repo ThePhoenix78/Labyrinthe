@@ -36,7 +36,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
 
-    labyrinthe={"listeJoueurs":joueurs,"tresors":nbTresors,"plateau":plateau}
+    labyrinthe={"listeJoueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1}
 
 
     return labyrinthe
@@ -79,7 +79,7 @@ def getPhase(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le numéro de la phase de jeu courante
     """
-    return
+    return labyrinthe["phase"]
 
 
 def changerPhase(labyrinthe):
@@ -97,7 +97,7 @@ def getNbTresors(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de trésors sur le plateau
     """
-    pass
+    return labyrinthe["tresors"]
 
 def getListeJoueurs(labyrinthe):
     """
@@ -120,7 +120,9 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
 
-    pass
+    labyrinthe["tresors"]-=1
+    prendreTresorPlateau(labyrinthe["plateau"],lin,col,numTresor)
+
 
 def prendreJoueurCourant(labyrinthe,lin,col):
     """
@@ -152,7 +154,7 @@ def getCarteAJouer(labyrinthe):
     paramètre: labyrinthe: le labyrinthe considéré
     résultat: la carte à jouer
     """
-    pass
+    return labyrinthe["carteAjouer"]
 
 
 def coupInterdit(labyrinthe,direction,rangee):
@@ -266,4 +268,5 @@ def finirTour(labyrinthe):
 
 
 if __name__ ==  "__main__":
-    Labyrinthe(["a","b","c","d"])
+    laby=Labyrinthe(["a","b","c","d"])
+    enleverTresor(laby,1,1,5)
