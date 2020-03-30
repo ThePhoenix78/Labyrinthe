@@ -32,6 +32,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
 
 
     joueurs=ListeJoueurs(nomsJoueurs)
+    initAleatoireJoueurCourant(joueurs)
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
@@ -249,7 +250,7 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
+    joueur = getJoueurCourant(labyrinthe["Joueurs"])
     #val = getCoordonneesJoueur(,joueur)
     #return accessibleDist(,val[0],val[1],ligA,colA)
 
