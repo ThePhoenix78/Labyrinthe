@@ -105,7 +105,7 @@ def getListeJoueurs(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: les joueurs sous la forme de la structure implémentée dans listeJoueurs.py
     """
-    return labyrinthe["listeJoueurs"]
+    return labyrinthe["Joueurs"]
 
 
 def enleverTresor(labyrinthe,lin,col,numTresor):
