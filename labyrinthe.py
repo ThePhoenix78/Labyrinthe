@@ -36,8 +36,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
 
-    labyrinthe={"listeJoueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1}
-
+    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1}
 
     return labyrinthe
 
@@ -55,7 +54,7 @@ def getNbParticipants(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nombre de joueurs de la partie
     """
-    return getNbJoueurs(labyrinthe["listeJoueurs"])
+    return getNbJoueurs(labyrinthe["Joueurs"])
 
 def getNomJoueurCourant(labyrinthe):
     """
@@ -63,7 +62,7 @@ def getNomJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le nom du joueurs courant
     """
-    return getJoueurCourant(labyrinthe["listeJoueurs"])
+    return nomJoueurCourant(labyrinthe["Joueurs"])
 
 def getNumJoueurCourant(labyrinthe):
     """
@@ -71,7 +70,7 @@ def getNumJoueurCourant(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: le numero du joueurs courant
     """
-    return  numJoueurCourant(labyrinthe["listeJoueurs"])
+    return numJoueurCourant(labyrinthe["Joueurs"])
 
 def getPhase(labyrinthe):
     """
@@ -88,7 +87,7 @@ def changerPhase(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    pass
+    labyrinthe["phase"]=2
 
 
 def getNbTresors(labyrinthe):
@@ -133,7 +132,7 @@ def prendreJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
+    joueur = getJoueurCourant(labyrinthe["Joueurs"])
     prendrePionPlateau(labyrinthe["plateau"],lin,col,joueur)
 
 
@@ -145,7 +144,7 @@ def poserJoueurCourant(labyrinthe,lin,col):
                 col: la colonne où se trouve la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    joueur = getJoueurCourant(labyrinthe["listeJoueurs"])
+    joueur = getJoueurCourant(labyrinthe["Joueurs"])
     poserPionPlateau(labyrinthe["plateau"],lin,col,joueur)
 
 def getCarteAJouer(labyrinthe):

@@ -31,6 +31,7 @@ def Plateau(nbJoueurs, nbTresors):
     #val-=int(val/(int(lig/2)+int(col/2))*2)-5
 
     cartes=creerCartesAmovibles(1,nbTresors)
+
     for i in range(lig):
         for j in range(col):
             if i==j==0:
