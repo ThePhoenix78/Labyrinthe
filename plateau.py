@@ -295,10 +295,10 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
             break
 
     chemin=[]
-    j=0
+    j=True
     for i in range(-1,-len(liste),-1):
-        if j==0:
-            j=1
+        if j:
+            j=False
             val=liste[-1]
             chemin.append(val)
         else:
@@ -329,5 +329,5 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
     print(getTresor(plat[0][0][3]))
-    b=accessibleDist(plat[0],5,5,4,4)
+    b=accessibleDist(plat[0],4,5,5,4)
     print(b)

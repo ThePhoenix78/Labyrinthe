@@ -264,13 +264,13 @@ def executerActionPhase1(labyrinthe,action,rangee):
     if action=="T":
         tournerCarte(labyrinthe)
         valide = 0
-    elif action in "NESO" and rangee in [1,3,5]:
+    elif action in ["N","E","S","O"] and rangee in [1,3,5]:
         if coupInterdit(labyrinthe,action,rangee):
             valide = 2
         else:
             val = jouerCarte(labyrinte,action,rangee)
             valide = 1
-    elif (action and rangee) in ("0123456789" or [0,1,2,3,4,5,6,7,8,9]):
+    elif (action and rangee) in ["0","1","2","3","4","5","6","7","8","9"]:
         valide = 3
     else:
         valide = 4

@@ -166,7 +166,18 @@ def saisirOrdre(lmt):
               c'est à dire le numéro de la ligne ou de la colonne où insérer la carte
               si l'ordre saisi n'est pas valide la focntion retourne (-1,-1)
     """
-    pass
+    val = input("Entrez un ordre : ")
+    if val == "T":
+        return val,None
+    elif val in ['N','E','S','O']:
+        val=val.split()
+        if val[1] in (1,2,3):
+            return val[0],val[1]
+        else:
+            return -1,-1
+    else:
+        return -1,-1
+
 
 def saisirDeplacement(lmt):
     """

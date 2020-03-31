@@ -104,8 +104,8 @@ def joueurCourantTrouveTresor(joueurs):
     paramètre: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    joueurs=getJoueurCourant(joueurs)
-    tresorTrouve(joueurs)
+    joueur=getJoueurCourant(joueurs)
+    tresorTrouve(joueur)
 
 def nbTresorsRestantsJoueur(joueurs,numJoueur):
     """
