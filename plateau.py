@@ -256,25 +256,34 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                     val=getVal(plateau,lig-1,col)
                     if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
                         setVal(matrice,lig-1,col,1)
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col))
+                            break
 
 
                 if lig+1<colone:
                     val=getVal(plateau,lig+1,col)
                     if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
                         setVal(matrice,lig+1,col,1)
-
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col))
+                            break
 
                 if col+1<ligne:
                     val=getVal(plateau,lig,col+1)
                     if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
                         setVal(matrice,lig,col+1,1)
-
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col))
+                            break
 
                 if col-1>0:
                     val=getVal(plateau,lig,col-1)
                     if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
                         setVal(matrice,lig,col-1,1)
-
+                        if getVal(matrice,ligA,colA)==1:
+                            liste.append((lig,col))
+                            break
 
             if getVal(matrice,ligA,colA)==1:
                 break
@@ -284,10 +293,22 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
     chemin=[]
 
-    print(liste)
+    j=0
+    for i in range(-1,-len(liste),-1):
+        if j==0:
+            j=1
+            val=liste[-1]
+            chemin.append(val)
+        else:
+            if liste[i][0]==val[0] and (liste[i][1]==val[1]+1 or liste[i][1]==val[1]-1):
+                chemin.append(liste[i])
+                val=liste[i]
+            elif (liste[i][0]==val[0]+1 or liste[i][0]==val[0]-1) and liste[i][1]==val[1]:
+                chemin.append(liste[i])
+                val=liste[i]
 
-    for elem in liste:
-        print(elem)
+    chemin.append(liste[0])
+    chemin.reverse()
 
     return chemin
 
@@ -303,5 +324,5 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
     print(getTresor(plat[0][0][3]))
-    b=accessibleDist(plat[0],0,0,2,2)
+    b=accessibleDist(plat[0],0,0,4,2)
     print(b)
