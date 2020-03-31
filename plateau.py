@@ -22,13 +22,9 @@ def Plateau(nbJoueurs, nbTresors):
                 ont été placée de manière aléatoire
               - la carte amovible qui n'a pas été placée sur le plateau
     """
-
     matrice=Matrice(7,7)
     lig=getNbLignes(matrice)
     col=getNbColonnes(matrice)
-
-    #val=lig*col
-    #val-=int(val/(int(lig/2)+int(col/2))*2)-5
 
     cartes=creerCartesAmovibles(1,nbTresors)
 
@@ -68,7 +64,6 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
                 nbTresors: le nombre total de trésor à créer
     résultat: la liste mélangée aléatoirement des cartes amovibles créees
     """
-
     liste=[]
 
     for i in range(16):
@@ -245,8 +240,7 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     liste=[]
     pasArrive=True
 
-    test=accessible(plateau,ligD,colD,ligA,colA)
-    if not test:
+    if not accessible(plateau,ligD,colD,ligA,colA):
         return None
 
     for lig in range(ligne):
@@ -281,6 +275,7 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                     if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
                         setVal(matrice,lig,col-1,1)
 
+
             if getVal(matrice,ligA,colA)==1:
                 break
         if getVal(matrice,ligA,colA)==1:
@@ -291,15 +286,10 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
     print(liste)
 
-    for i in range(len(liste)):
-        for j in range(len(liste)):
-            if liste[i][j][0]:
-                pass
+    for elem in liste:
+        print(elem)
 
-
-
-    if chemin:
-        return chemin
+    return chemin
 
 
 if __name__=="__main__":
@@ -312,9 +302,6 @@ if __name__=="__main__":
             setVal(mat,i,j,listeCartes[coderMurs(plat[0][i][j])])
     for ligne in mat:
         print(ligne)
-
-
     print(getTresor(plat[0][0][3]))
-
-    b=accessibleDist(plat[0],0,0,3,3)
+    b=accessibleDist(plat[0],0,0,2,2)
     print(b)

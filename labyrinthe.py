@@ -88,7 +88,9 @@ def changerPhase(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-    labyrinthe["phase"]=2
+    labyrinthe["phase"]+=1
+    if labyrinthe["phase"]>2:
+        labyrinthe["phase"]=0
 
 
 def getNbTresors(labyrinthe):
@@ -119,7 +121,6 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     la fonction ne retourne rien mais modifie le labyrinthe
     """
-
     labyrinthe["tresors"]-=1
     prendreTresorPlateau(labyrinthe["plateau"],lin,col,numTresor)
 
@@ -166,7 +167,16 @@ def coupInterdit(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-    pass
+    lig=getNbColonnes(labyrinthe["plateau"])
+    col=getNbLignes(labyrinthe["plateau"])
+
+    if direction in ("N","S") and rangee%2==1 and rangee<col:
+        return False
+
+    elif direction in ("E","O") and rangee%2==1 and rangee<col:
+        return False
+
+    return True
 
 def jouerCarte(labyrinthe,direction,rangee):
     """
@@ -180,16 +190,19 @@ def jouerCarte(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    
-    if direction=="N":
-        pass
-    elif direction=="S":
-        pass
-    elif direction=="E":
-        pass
-    elif direction=="O":
-        pass
+    if coupInterdit(labyrinthe,direction,rangee):
+        return
 
+    if direction=="N":
+        carte=decalageColonneEnBas(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+    elif direction=="S":
+        carte=decalageColonneEnHaut(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+    elif direction=="E":
+        carte=decalageLigneAGauche(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+    elif direction=="O":
+        carte=decalageLigneADroite(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+
+    labyrinthe["carteAjouer"]=carte
 
 
 
@@ -202,7 +215,7 @@ def tournerCarte(labyrinthe,sens='H'):
     """
     if sens=="H":
         tournerHoraire(labyrinthe["carteAjouer"])
-    else:
+    elif sens=="A":
         tournerAntiHoraire(labyrinthe["carteAjouer"])
 
 def getTresorCourant(labyrinthe):
@@ -283,3 +296,4 @@ def finirTour(labyrinthe):
 if __name__ ==  "__main__":
     laby=Labyrinthe(["a","b","c","d"])
     enleverTresor(laby,1,1,5)
+    jouerCarte(laby,"S",5)
