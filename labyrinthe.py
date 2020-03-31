@@ -180,7 +180,16 @@ def jouerCarte(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    pass
+    
+    if direction=="N":
+        pass
+    elif direction=="S":
+        pass
+    elif direction=="E":
+        pass
+    elif direction=="O":
+        pass
+
 
 
 
@@ -191,7 +200,10 @@ def tournerCarte(labyrinthe,sens='H'):
                 sens: un caractère indiquant le sens dans lequel tourner la carte
      Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    pass
+    if sens=="H":
+        tournerHoraire(labyrinthe["carteAjouer"])
+    else:
+        tournerAntiHoraire(labyrinthe["carteAjouer"])
 
 def getTresorCourant(labyrinthe):
     """
@@ -199,7 +211,7 @@ def getTresorCourant(labyrinthe):
     paramètre: labyritnthe: le labyrinthe considéré
     resultat: le numéro du trésor recherché par le joueur courant
     """
-    pass
+    return tresorCourant(labyrinthe["Joueurs"])
 
 def getCoordonneesTresorCourant(labyrinthe):
     """
@@ -208,7 +220,8 @@ def getCoordonneesTresorCourant(labyrinthe):
     resultat: les coordonnées du trésor à chercher ou None si celui-ci
               n'est pas sur le plateau
     """
-    pass
+    tres=tresorCourant(labyrinthe["Joueurs"])
+    return getCoordonneesTresor(labyrinthe["plateau"],tres)
 
 
 def getCoordonneesJoueurCourant(labyrinthe):
@@ -218,7 +231,8 @@ def getCoordonneesJoueurCourant(labyrinthe):
     resultat: les coordonnées du joueur courant ou None si celui-ci
               n'est pas sur le plateau
     """
-    pass
+    jou=numJoueurCourant(labyrinthe["Joueurs"])
+    return getCoordonneesJoueur(labyrinthe["plateau"],jou)
 
 
 def executerActionPhase1(labyrinthe,action,rangee):
@@ -250,9 +264,8 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    joueur = getJoueurCourant(labyrinthe["Joueurs"])
-    #val = getCoordonneesJoueur(,joueur)
-    #return accessibleDist(,val[0],val[1],ligA,colA)
+    val = getCoordonneesJoueurCourant(labyrinthe)
+    return accessibleDist(labyrinthe["plateau"],val[0],val[1],ligA,colA)
 
 def finirTour(labyrinthe):
     """
