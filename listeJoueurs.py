@@ -21,7 +21,6 @@ def ListeJoueurs(nomsJoueurs):
     listeDesJoueurs={"joueurs":[],"courant":0}
     for nom in nomsJoueurs:
         listeDesJoueurs["joueurs"].append(Joueur(nom))
-
     return listeDesJoueurs
 
 
@@ -87,7 +86,7 @@ def getNbJoueurs(joueurs):
     paramètre: joueurs la liste des joueurs
     résultat: le nombre de joueurs de la partie
     """
-    return len(joueurs["joueurs"])
+    return len(joueurs["joueurs"])-1
 
 def getJoueurCourant(joueurs):
     """
@@ -116,6 +115,8 @@ def nbTresorsRestantsJoueur(joueurs,numJoueur):
                 numJoueur le numéro du joueur
     résultat: le nombre de trésors que joueur numJoueur doit encore trouver
     """
+    if numJoueur>getNbJoueurs(joueurs):
+        numJoueur=getNbJoueurs(joueurs)
     joueurs=joueurs["joueurs"][numJoueur]
     return getNbTresorsRestants(joueurs)
 
@@ -145,6 +146,8 @@ def nomJoueur(joueurs,numJoueur):
                 numJoueur le numéro du joueur
     résultat: le nom du joueur numJoueur
     """
+    if numJoueur>getNbJoueurs(joueurs):
+        numJoueur=getNbJoueurs(joueurs)
     joueur=joueurs["joueurs"][numJoueur]
     return getNom(joueur)
 

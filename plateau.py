@@ -184,35 +184,36 @@ def accessible(plateau,ligD,colD,ligA,colA):
 
     setVal(matrice,ligD,colD,1)
 
-    for lig in range(ligne):
-        for col in range(colone):
-            if getVal(matrice,lig,col)==1:
+    for i in range(ligne*colone):
+        for lig in range(ligne):
+            for col in range(colone):
+                if getVal(matrice,lig,col)==1:
 
-                case=getVal(plateau,lig,col)
-                setVal(matrice,lig,col,2)
+                    case=getVal(plateau,lig,col)
+                    setVal(matrice,lig,col,2)
 
-                if lig-1>0:
-                    val=getVal(plateau,lig-1,col)
-                    if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
-                        setVal(matrice,lig-1,col,1)
+                    if lig-1>0:
+                        val=getVal(plateau,lig-1,col)
+                        if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                            setVal(matrice,lig-1,col,1)
 
-                if lig+1<colone:
-                    val=getVal(plateau,lig+1,col)
-                    if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
-                        setVal(matrice,lig+1,col,1)
+                    if lig+1<colone:
+                        val=getVal(plateau,lig+1,col)
+                        if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                            setVal(matrice,lig+1,col,1)
 
-                if col+1<ligne:
-                    val=getVal(plateau,lig,col+1)
-                    if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
-                        setVal(matrice,lig,col+1,1)
+                    if col+1<ligne:
+                        val=getVal(plateau,lig,col+1)
+                        if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                            setVal(matrice,lig,col+1,1)
 
-                if col-1>0:
-                    val=getVal(plateau,lig,col-1)
-                    if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
-                        setVal(matrice,lig,col-1,1)
+                    if col-1>0:
+                        val=getVal(plateau,lig,col-1)
+                        if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                            setVal(matrice,lig,col-1,1)
 
-            if getVal(matrice,ligA,colA)==1:
-                return True
+                if getVal(matrice,ligA,colA)==1:
+                    return True
 
     return False
 
@@ -243,56 +244,57 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     if not accessible(plateau,ligD,colD,ligA,colA):
         return None
 
-    for lig in range(ligne):
-        for col in range(colone):
-            if getVal(matrice,lig,col)==1:
+    for i in range(ligne*colone):
+        for lig in range(ligne):
+            for col in range(colone):
+                if getVal(matrice,lig,col)==1:
 
-                case=getVal(plateau,lig,col)
-                setVal(matrice,lig,col,2)
-                liste.append((lig,col))
-
-
-                if lig-1>0:
-                    val=getVal(plateau,lig-1,col)
-                    if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
-                        setVal(matrice,lig-1,col,1)
-                        if getVal(matrice,ligA,colA)==1:
-                            liste.append((lig,col))
-                            break
+                    case=getVal(plateau,lig,col)
+                    setVal(matrice,lig,col,2)
+                    liste.append((lig,col))
 
 
-                if lig+1<colone:
-                    val=getVal(plateau,lig+1,col)
-                    if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
-                        setVal(matrice,lig+1,col,1)
-                        if getVal(matrice,ligA,colA)==1:
-                            liste.append((lig,col))
-                            break
+                    if lig-1>0:
+                        val=getVal(plateau,lig-1,col)
+                        if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                            setVal(matrice,lig-1,col,1)
+                            if getVal(matrice,ligA,colA)==1:
+                                liste.append((lig,col))
+                                break
 
-                if col+1<ligne:
-                    val=getVal(plateau,lig,col+1)
-                    if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
-                        setVal(matrice,lig,col+1,1)
-                        if getVal(matrice,ligA,colA)==1:
-                            liste.append((lig,col))
-                            break
 
-                if col-1>0:
-                    val=getVal(plateau,lig,col-1)
-                    if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
-                        setVal(matrice,lig,col-1,1)
-                        if getVal(matrice,ligA,colA)==1:
-                            liste.append((lig,col))
-                            break
+                    if lig+1<colone:
+                        val=getVal(plateau,lig+1,col)
+                        if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                            setVal(matrice,lig+1,col,1)
+                            if getVal(matrice,ligA,colA)==1:
+                                liste.append((lig,col))
+                                break
 
+                    if col+1<ligne:
+                        val=getVal(plateau,lig,col+1)
+                        if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                            setVal(matrice,lig,col+1,1)
+                            if getVal(matrice,ligA,colA)==1:
+                                liste.append((lig,col))
+                                break
+
+                    if col-1>0:
+                        val=getVal(plateau,lig,col-1)
+                        if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                            setVal(matrice,lig,col-1,1)
+                            if getVal(matrice,ligA,colA)==1:
+                                liste.append((lig,col))
+                                break
+
+                if getVal(matrice,ligA,colA)==1:
+                    break
             if getVal(matrice,ligA,colA)==1:
                 break
         if getVal(matrice,ligA,colA)==1:
             break
 
-
     chemin=[]
-
     j=0
     for i in range(-1,-len(liste),-1):
         if j==0:
@@ -307,8 +309,11 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                 chemin.append(liste[i])
                 val=liste[i]
 
-    chemin.append(liste[0])
+    if (ligD,colD) not in chemin:
+        chemin.append((ligD,colD))
     chemin.reverse()
+    if (ligA,colA) not in chemin:
+        chemin.append((ligA,colA))
 
     return chemin
 
@@ -324,5 +329,5 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
     print(getTresor(plat[0][0][3]))
-    b=accessibleDist(plat[0],0,0,4,2)
+    b=accessibleDist(plat[0],5,5,4,4)
     print(b)

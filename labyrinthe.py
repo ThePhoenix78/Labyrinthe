@@ -190,9 +190,6 @@ def jouerCarte(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
-    if coupInterdit(labyrinthe,direction,rangee):
-        return
-
     if direction=="N":
         carte=decalageColonneEnBas(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
     elif direction=="S":
@@ -264,7 +261,20 @@ def executerActionPhase1(labyrinthe,action,rangee):
               3 si action et rangee sont des entiers positifs
               4 dans tous les autres cas
     """
-    pass
+    if action=="T":
+        tournerCarte(labyrinthe)
+        valide = 0
+    elif action in "NESO" and rangee in [1,3,5]:
+        if coupInterdit(labyrinthe,action,rangee):
+            valide = 2
+        else:
+            val = jouerCarte(labyrinte,action,rangee)
+            valide = 1
+    elif (action and rangee) in ("0123456789" or [0,1,2,3,4,5,6,7,8,9]):
+        valide = 3
+    else:
+        valide = 4
+    return valide
 
 def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     """
