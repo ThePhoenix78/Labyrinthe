@@ -169,14 +169,10 @@ def saisirOrdre(lmt):
     val = input("Entrez un ordre : ")
     if val == "T":
         return val,None
-    elif val in ['N','E','S','O']:
-        val=val.split()
-        if val[1] in (1,2,3):
-            return val[0],val[1]
-        else:
-            return -1,-1
-    else:
-        return -1,-1
+    val=val.split()
+    if val[0] in ['N','E','S','O'] and val[1] in ("1","2","3") and len(val)==2:
+        return val[0],int(val[1])
+    return -1,-1
 
 
 def saisirDeplacement(lmt):
@@ -185,7 +181,21 @@ def saisirDeplacement(lmt):
     paramètre: lmt: une vue texte de labyrinthe
     résultat: un couple d'entier (lin,col) indiquant les coordonnées de la case destination. Si l'utilisateur a entré des coordonnées incorrecte la fonction retourne (-1,-1)
     """
-    pass
+    lab = lmt["labyrinte"]
+    coord = input("Entrez les coordonées de la case où vous voulez aller : ")
+    coord = coord.split()
+    if len(coord)!=2:
+        return -1,-1
+    try:
+        coord[0]=int(coord[0])
+        coord[1]=int(coord[1])
+    except:
+        return -1,-1
+    acces = accessibleDistJoueurCourant(lab,coord[0],coord[1])
+    if acces==None:
+        return -1,-1
+    return acces[-1]
+
 
 # demarre la partie en mode texte
 def demarrer(lmt):

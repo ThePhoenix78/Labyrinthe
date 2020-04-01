@@ -263,18 +263,19 @@ def executerActionPhase1(labyrinthe,action,rangee):
     """
     if action=="T":
         tournerCarte(labyrinthe)
-        valide = 0
+        return 0
     elif action in ["N","E","S","O"] and rangee in [1,3,5]:
         if coupInterdit(labyrinthe,action,rangee):
-            valide = 2
+            return 2
         else:
-            val = jouerCarte(labyrinte,action,rangee)
-            valide = 1
+            val = jouerCarte(labyrinthe,action,rangee)
+            labyrinthe["carteAjouer"]=val
+            changerPhase(labyrinthe)
+            return 1
     elif (action and rangee) in ["0","1","2","3","4","5","6","7","8","9"]:
-        valide = 3
+        return 3
     else:
-        valide = 4
-    return valide
+        return 4
 
 def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     """
@@ -300,7 +301,19 @@ def finirTour(labyrinthe):
               1 si le joueur courant a trouvé un trésor mais la partie n'est pas terminée
               2 si le joueur courant a trouvé son dernier trésor (la partie est donc terminée)
     """
-    pass
+    tresC = getTresorCourant(labyrinthe)
+    coordJoueur = getCoordonneesJoueurCourant(labyrinthe)
+    coordTres = getCoordonneesTresorCourant(labyrinthe)
+    if coordJoueur == coordTres:
+        joueurCourantTrouveTresor(labyrinthe["Joueurs"])
+        prendreTresorPlateau(labyrinthe["plateau"],coordTres[0],coordTres[1],tresC)
+        if joueurCourantAFini(labyrinthe["Joueurs"]):
+            return 2
+        else:
+            return 1
+    else:
+        return 0
+
 
 
 if __name__ ==  "__main__":

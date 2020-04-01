@@ -185,8 +185,8 @@ def joueurCourantAFini(joueurs):
 if __name__ == "__main__":
     j=ListeJoueurs(["a","b","c","d"])
     distribuerTresors(j)
-    #v=prochainTresorJoueur(j,2)
-    #w=nbTresorsRestantsJoueur(j,1)
-    #x=getJoueurCourant(j)
-    #y=nomJoueur(j,1)
-    print(j)#,v,w,x,y)
+    v=prochainTresorJoueur(j,1)
+    w=nbTresorsRestantsJoueur(j,1)
+    x=getJoueurCourant(j)
+    y=nomJoueur(j,1)
+    print(j,v,w,x,y)
