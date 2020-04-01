@@ -36,7 +36,6 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
-
     labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1}
 
     return labyrinthe
