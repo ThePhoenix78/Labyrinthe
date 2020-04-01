@@ -52,7 +52,7 @@ def afficheCarte(lmt, carte,pion=1,tresor=-1):
     coulFond=NORMAL
     coulCar=NORMAL
     style=AUCUN
-    
+
     if getTresor(carte)==tresor:
         coulFond=GRIS
         coulCar=NOIR
@@ -136,6 +136,7 @@ def animationChemin(lmt,chemin, joueur,pause=0.1):
                 joueur: numéro du joueur qui se déplace
                 pause: temporisation entre l'affichage de deux étapes
     """
+    print(chemin,2)
     (xp,yp)=chemin.pop(0)
     plateau=getPlateau(getLabyrinthe(lmt))
     for (x,y) in chemin:
@@ -170,7 +171,7 @@ def saisirOrdre(lmt):
     if val == "T":
         return val,None
     val=val.split()
-    if val[0] in ['N','E','S','O'] and val[1] in ("1","2","3") and len(val)==2:
+    if val[0] in ['N','E','S','O'] and val[1] in ("1","3","5") and len(val)==2:
         return val[0],int(val[1])
     return -1,-1
 
@@ -181,7 +182,7 @@ def saisirDeplacement(lmt):
     paramètre: lmt: une vue texte de labyrinthe
     résultat: un couple d'entier (lin,col) indiquant les coordonnées de la case destination. Si l'utilisateur a entré des coordonnées incorrecte la fonction retourne (-1,-1)
     """
-    lab = lmt["labyrinte"]
+    lab = lmt["labyrinthe"]
     coord = input("Entrez les coordonées de la case où vous voulez aller : ")
     coord = coord.split()
     if len(coord)!=2:
@@ -194,7 +195,7 @@ def saisirDeplacement(lmt):
     acces = accessibleDistJoueurCourant(lab,coord[0],coord[1])
     if acces==None:
         return -1,-1
-    return acces[-1]
+    return coord
 
 
 # demarre la partie en mode texte

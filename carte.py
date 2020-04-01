@@ -148,7 +148,10 @@ def prendrePion(c, pion):
     Cette fonction modifie la carte mais ne retourne rien
     """
     if pion in c["ListePions"]:
-      c["ListePions"].remove(pion)
+        if len(c["ListePions"])==1:
+            c["ListePions"]=[]
+        else:
+            c["ListePions"].remove(pion)
 
 
 def poserPion(c, pion):

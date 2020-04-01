@@ -27,17 +27,26 @@ def Plateau(nbJoueurs, nbTresors):
     col=getNbColonnes(matrice)
 
     cartes=creerCartesAmovibles(1,nbTresors)
-    
+
     for i in range(lig):
         for j in range(col):
             if i==j==0:
-                setVal(matrice,i,j,Carte(True,False,False,True))
+                setVal(matrice,i,j,Carte(True,False,False,True,0,[1]))
             elif i==0 and j==col-1:
-                setVal(matrice,i,j,Carte(True,True,False,False))
+                if nbJoueurs>=2:
+                    setVal(matrice,i,j,Carte(True,True,False,False,0,[2]))
+                else:
+                    setVal(matrice,i,j,Carte(True,True,False,False))
             elif i==lig-1 and j==0:
-                setVal(matrice,i,j,Carte(False,False,True,True))
+                if nbJoueurs>=3:
+                    setVal(matrice,i,j,Carte(False,False,True,True,0,[3]))
+                else:
+                    setVal(matrice,i,j,Carte(False,False,True,True))
             elif i==lig-1 and j==col-1:
-                setVal(matrice,i,j,Carte(False,True,True,False))
+                if nbJoueurs>=4:
+                    setVal(matrice,i,j,Carte(False,True,True,False,0,[4]))
+                else:
+                    setVal(matrice,i,j,Carte(False,True,True,False))
 
             elif i==0 and j%2==0:
                 setVal(matrice,i,j,Carte(True,False,False,False))
@@ -315,6 +324,7 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     if (ligA,colA) not in chemin:
         chemin.append((ligA,colA))
 
+    print(chemin,1)
     return chemin
 
 

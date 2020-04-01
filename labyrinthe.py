@@ -88,7 +88,7 @@ def changerPhase(labyrinthe):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
     labyrinthe["phase"]+=1
-    if labyrinthe["phase"]>2:
+    if labyrinthe["phase"]>=3:
         labyrinthe["phase"]=0
 
 
@@ -316,5 +316,6 @@ def finirTour(labyrinthe):
 
 if __name__ ==  "__main__":
     laby=Labyrinthe(["a","b","c","d"])
+    getCoordonneesJoueurCourant(laby)
     enleverTresor(laby,1,1,5)
     jouerCarte(laby,"S",5)
