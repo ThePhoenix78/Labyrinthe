@@ -27,7 +27,7 @@ def Plateau(nbJoueurs, nbTresors):
     col=getNbColonnes(matrice)
 
     cartes=creerCartesAmovibles(1,nbTresors)
-
+    
     for i in range(lig):
         for j in range(col):
             if i==j==0:

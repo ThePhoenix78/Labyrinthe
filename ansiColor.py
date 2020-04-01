@@ -3,10 +3,10 @@
     Projet Labyrinthe
     Projet Python 2020 - Licence Informatique UNC (S3 TREC7)
 
-   Module ansi 
+   Module ansi
    ~~~~~~~~~~~~~~~
-   
-   Petit script permettant un affichage coloré dans une console en utilisant le code ANSI. 
+
+   Petit script permettant un affichage coloré dans une console en utilisant le code ANSI.
 """
 
 fin='\x1b[0m'

@@ -52,7 +52,7 @@ def afficheCarte(lmt, carte,pion=1,tresor=-1):
     coulFond=NORMAL
     coulCar=NORMAL
     style=AUCUN
-
+    
     if getTresor(carte)==tresor:
         coulFond=GRIS
         coulCar=NOIR

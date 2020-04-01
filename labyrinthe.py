@@ -267,8 +267,7 @@ def executerActionPhase1(labyrinthe,action,rangee):
         if coupInterdit(labyrinthe,action,rangee):
             return 2
         else:
-            val = jouerCarte(labyrinthe,action,rangee)
-            labyrinthe["carteAjouer"]=val
+            jouerCarte(labyrinthe,action,rangee)
             changerPhase(labyrinthe)
             return 1
     elif (action and rangee) in ["0","1","2","3","4","5","6","7","8","9"]:
