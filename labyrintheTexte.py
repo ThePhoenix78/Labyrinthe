@@ -191,6 +191,9 @@ def saisirDeplacement(lmt):
         coord[1]=int(coord[1])
     except:
         return -1,-1
+    pos=getCoordonneesJoueurCourant(lab)
+    if coord[0]==pos[0] and coord[1]==pos[1]:
+        return coord
     acces = accessibleDistJoueurCourant(lab,coord[0],coord[1])
     if acces==None:
         return -1,-1

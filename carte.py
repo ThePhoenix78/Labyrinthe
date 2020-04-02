@@ -29,7 +29,7 @@ def Carte( nord, est, sud, ouest, tresor=0, pions=[]):
     tresor est le numéro du trésor qui se trouve sur la carte (0 s'il n'y a pas de trésor)
     pions est la liste des pions qui sont posés sur la carte (un pion est un entier entre 1 et 4)
     """
-    return {"nord":nord,"est":est,"sud":sud,"ouest":ouest,"ListePions":pions,"tresor":tresor}
+    return {"nord":nord,"est":est,"sud":sud,"ouest":ouest,"ListePions":pions.copy(),"tresor":tresor}
 
 def estValide(c):
     """
