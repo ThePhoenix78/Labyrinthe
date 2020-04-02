@@ -74,10 +74,10 @@ def changerJoueurCourant(joueurs):
     paramètres: joueurs la liste des joueurs
     cette fonction ne retourne rien mais modifie la liste des joueurs
     """
-    val=joueurs["courant"]
-    val+=1
+
+    joueurs["courant"]+=1
     if joueurs["courant"]>getNbJoueurs(joueurs):
-        val=1
+        joueurs["courant"]=1
 
 
 def getNbJoueurs(joueurs):
