@@ -89,7 +89,7 @@ def changerPhase(labyrinthe):
     """
     labyrinthe["phase"]+=1
     if labyrinthe["phase"]>=3:
-        labyrinthe["phase"]=0
+        labyrinthe["phase"]=1
 
 
 def getNbTresors(labyrinthe):
@@ -309,9 +309,11 @@ def finirTour(labyrinthe):
             return 2
         else:
             changerJoueurCourant(labyrinthe["Joueurs"])
+            changerPhase(labyrinthe)
             return 1
     else:
         changerJoueurCourant(labyrinthe["Joueurs"])
+        changerPhase(labyrinthe)
         return 0
 
 

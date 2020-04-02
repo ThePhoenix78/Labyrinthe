@@ -333,7 +333,7 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
 
 if __name__=="__main__":
-    plat=Plateau(4,30)
+    plat=Plateau(4,24)
     lig=getNbLignes(plat[0])
     col=getNbColonnes(plat[0])
     mat=Matrice(lig,col)
