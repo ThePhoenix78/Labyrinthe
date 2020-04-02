@@ -136,7 +136,6 @@ def animationChemin(lmt,chemin, joueur,pause=0.1):
                 joueur: numéro du joueur qui se déplace
                 pause: temporisation entre l'affichage de deux étapes
     """
-    print(chemin,2)
     (xp,yp)=chemin.pop(0)
     plateau=getPlateau(getLabyrinthe(lmt))
     for (x,y) in chemin:

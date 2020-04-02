@@ -269,7 +269,6 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                     setVal(matrice,lig,col,2)
                     liste.append((lig,col))
 
-
                     if lig-1>0:
                         val=getVal(plateau,lig-1,col)
                         if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
@@ -277,7 +276,6 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                             if getVal(matrice,ligA,colA)==1:
                                 liste.append((lig,col))
                                 break
-
 
                     if lig+1<colone:
                         val=getVal(plateau,lig+1,col)
@@ -331,7 +329,6 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     if (ligA,colA) not in chemin:
         chemin.append((ligA,colA))
 
-    print(chemin,1)
     return chemin
 
 
@@ -346,5 +343,5 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
     print(getTresor(plat[0][0][3]))
-    b=accessibleDist(plat[0],4,5,5,4)
+    b=accessibleDist(plat[0],2,2,5,4)
     print(b)
