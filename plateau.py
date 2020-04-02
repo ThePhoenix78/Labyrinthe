@@ -58,6 +58,14 @@ def Plateau(nbJoueurs, nbTresors):
             elif i%2==0 and j==col-1:
                 setVal(matrice,i,j,Carte(False,True,False,False))
 
+            elif i==2 and j==2:
+                setVal(matrice,i,j,Carte(False,False,False,True))
+            elif i==2 and j==4:
+                setVal(matrice,i,j,Carte(True,False,False,False))
+            elif i==4 and j==2:
+                setVal(matrice,i,j,Carte(False,False,True,False))
+            elif i==4 and j==4:
+                setVal(matrice,i,j,Carte(False,True,False,False))
             else:
                 setVal(matrice,i,j,cartes.pop(0))
 
@@ -85,7 +93,7 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
         tourneAleatoire(carte)
         liste.append(carte)
 
-    for i in range(10):
+    for i in range(6):
         carte=Carte(True,False,False,False)
         tourneAleatoire(carte)
         liste.append(carte)
@@ -248,7 +256,6 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
     setVal(matrice,ligD,colD,1)
 
     liste=[]
-    pasArrive=True
 
     if not accessible(plateau,ligD,colD,ligA,colA):
         return None

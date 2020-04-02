@@ -260,7 +260,7 @@ def executerActionPhase1(labyrinthe,action,rangee):
               3 si action et rangee sont des entiers positifs
               4 dans tous les autres cas
     """
-    if action=="T":
+    if action=="T" or action == "T T":
         tournerCarte(labyrinthe)
         return 0
     elif action in ["N","E","S","O"] and rangee in [1,3,5]:
@@ -308,8 +308,10 @@ def finirTour(labyrinthe):
         if joueurCourantAFini(labyrinthe["Joueurs"]):
             return 2
         else:
+            changerJoueurCourant(labyrinthe["Joueurs"])
             return 1
     else:
+        changerJoueurCourant(labyrinthe["Joueurs"])
         return 0
 
 

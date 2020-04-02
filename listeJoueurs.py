@@ -77,7 +77,7 @@ def changerJoueurCourant(joueurs):
     val=joueurs["courant"]
     val+=1
     if joueurs["courant"]>getNbJoueurs(joueurs):
-        val=0
+        val=1
 
 
 def getNbJoueurs(joueurs):
