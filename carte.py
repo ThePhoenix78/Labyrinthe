@@ -214,25 +214,16 @@ def coderMurs(c):
     paramètre c une carte
     retourne un entier indice du caractère semi-graphique de la carte
     """
-    val=""
-    if murOuest(c):
-        val+="1"
-    else:
-        val+="0"
-    if murSud(c):
-        val+="1"
-    else:
-        val+="0"
-    if murEst(c):
-        val+="1"
-    else:
-        val+="0"
+    val=0
     if murNord(c):
-        val+="1"
-    else:
-        val+="0"
-
-    return int(val,2)
+        val+=1
+    if murEst(c):
+        val+=10
+    if murSud(c):
+        val+=100
+    if murOuest(c):
+        val+=1000
+    return int(str(val),2)
 
 
 def decoderMurs(c,code):
