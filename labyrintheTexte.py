@@ -192,7 +192,10 @@ def saisirDeplacement(lmt):
     except:
         return -1,-1
     pos=getCoordonneesJoueurCourant(lab)
-    if coord[0]==pos[0] and coord[1]==pos[1]:
+    if pos==None:
+        return None
+
+    elif coord[0]==pos[0] and coord[1]==pos[1]:
         return coord
     acces = accessibleDistJoueurCourant(lab,coord[0],coord[1])
     if acces==None:
@@ -232,10 +235,15 @@ def demarrer(lmt):
 
         # la première phase est terminée, on va demander au joueur sa case destination
         chemin=None
-        xDep,yDep=getCoordonneesJoueurCourant(labyrinthe)
+        try:
+            xDep,yDep=getCoordonneesJoueurCourant(labyrinthe)
+        except:
+            xDep=getCoordonneesJoueurCourant(labyrinthe)
         nomJC=getNomJoueurCourant(labyrinthe)
         pionJC=getNumJoueurCourant(labyrinthe)
         while chemin==None: # tant que la case destination n'est pas valide
+            if xDep==None:
+                break
             xA,yA=saisirDeplacement(lmt) # saisie de la destination
             if xA==-1 or yA==-1: # coordonées incorrectes
                 afficheLabyrinthe(lmt,"Veuillez choisir une case du labyrinthe")
@@ -246,7 +254,8 @@ def demarrer(lmt):
                     afficheLabyrinthe(lmt,"Cette case n'est pas accessible au joueur "+nomJC)
         # le joueur a saisi une destination correcte et accessible
         # on déplace le joueur sur sa case destination
-        animationChemin(lmt,chemin,pionJC)
+        if xDep!=None:
+            animationChemin(lmt,chemin,pionJC)
         # sauvegarde du numéro de trésor à trouver pour l'affichage
         t=getTresorCourant(labyrinthe)
         # action finalisant le tour

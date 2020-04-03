@@ -151,8 +151,7 @@ def getCoordonneesJoueur(plateau,numJoueur):
     """
     for i in range(len(plateau)):
         for j in range(len(plateau[i])):
-            val = possedePion(plateau[i][j],numJoueur)
-            if val:
+            if possedePion(plateau[i][j],numJoueur):
                 return i,j
     return None
 
@@ -257,6 +256,9 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
     liste=[]
 
+    if ligD==ligA and colD==colA:
+        return [(ligD,colD),(ligA,colA)]
+
     if not accessible(plateau,ligD,colD,ligA,colA):
         return None
 
@@ -271,33 +273,33 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
                     setVal(matrice,lig,col,2)
                     liste.append((lig,col))
 
-                    if lig-1>=0:
+                    if lig-1>=0 and getVal(matrice,lig-1,col)!=2:
                         val=getVal(plateau,lig-1,col)
-                        if passageNord(case,val) and getVal(matrice,lig-1,col)!=2:
+                        if passageNord(case,val):
                             setVal(matrice,lig-1,col,1)
                             if getVal(matrice,ligA,colA)==1:
                                 liste.append((lig,col))
                                 break
 
-                    if lig+1<colone:
+                    if lig+1<colone and getVal(matrice,lig+1,col)!=2:
                         val=getVal(plateau,lig+1,col)
-                        if passageSud(case,val) and getVal(matrice,lig+1,col)!=2:
+                        if passageSud(case,val):
                             setVal(matrice,lig+1,col,1)
                             if getVal(matrice,ligA,colA)==1:
                                 liste.append((lig,col))
                                 break
 
-                    if col+1<ligne:
+                    if col+1<ligne and getVal(matrice,lig,col+1)!=2:
                         val=getVal(plateau,lig,col+1)
-                        if passageEst(case,val) and getVal(matrice,lig,col+1)!=2:
+                        if passageEst(case,val):
                             setVal(matrice,lig,col+1,1)
                             if getVal(matrice,ligA,colA)==1:
                                 liste.append((lig,col))
                                 break
 
-                    if col-1>=0:
+                    if col-1>=0 and getVal(matrice,lig,col-1)!=2:
                         val=getVal(plateau,lig,col-1)
-                        if passageOuest(case,val) and getVal(matrice,lig,col-1)!=2:
+                        if passageOuest(case,val):
                             setVal(matrice,lig,col-1,1)
                             if getVal(matrice,ligA,colA)==1:
                                 liste.append((lig,col))
@@ -310,19 +312,23 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
         if getVal(matrice,ligA,colA)==1:
             break
 
-    j=True
-    for i in range(-1,-len(liste),-1):
-        if j:
-            j=False
-            val=liste[-1]
-            chemin.append(val)
-        else:
-            if liste[i][0]==val[0] and (liste[i][1]==val[1]+1 or liste[i][1]==val[1]-1):
-                chemin.append(liste[i])
-                val=liste[i]
-            elif (liste[i][0]==val[0]+1 or liste[i][0]==val[0]-1) and liste[i][1]==val[1]:
-                chemin.append(liste[i])
-                val=liste[i]
+    chemin.append(liste[-1])
+
+    val=liste[-1]
+    act=getVal(plateau,val[0],val[1])
+
+    for i in range(-2,-len(liste),-1):
+        pre=getVal(plateau,liste[i][0],liste[i][1])
+        if liste[i][0]==val[0] and (liste[i][1]==val[1]+1 or liste[i][1]==val[1]-1) and (passageEst(act,pre) or passageOuest(act,pre)):
+            chemin.append(liste[i])
+            val=liste[i]
+            act=getVal(plateau,liste[i][0],liste[i][1])
+
+        elif (liste[i][0]==val[0]+1 or liste[i][0]==val[0]-1) and liste[i][1]==val[1] and (passageNord(act,pre) or passageSud(act,pre)):
+            chemin.append(liste[i])
+            val=liste[i]
+            act=getVal(plateau,liste[i][0],liste[i][1])
+
 
     if (ligD,colD) not in chemin:
         chemin.append((ligD,colD))
@@ -344,6 +350,6 @@ if __name__=="__main__":
     for ligne in mat:
         print(ligne)
     print(getTresor(plat[0][0][3]))
-    a=accessible(plat[0],1,1,0,0)
-    b=accessibleDist(plat[0],1,1,0,0)
+    a=accessible(plat[0],2,1,0,0)
+    b=accessibleDist(plat[0],2,1,3,5)
     print(b)
