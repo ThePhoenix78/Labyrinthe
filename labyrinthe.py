@@ -36,7 +36,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
-    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1}
+    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1,"coupsInterdit":(0,"0")}
 
     return labyrinthe
 
@@ -169,10 +169,13 @@ def coupInterdit(labyrinthe,direction,rangee):
     lig=getNbColonnes(labyrinthe["plateau"])
     col=getNbLignes(labyrinthe["plateau"])
 
-    if direction in ("N","S") and rangee%2==1 and rangee<col:
+
+    if direction in ("N","S") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
+        labyrinthe["coupsInterdit"]=(rangee,direction)
         return False
 
-    elif direction in ("E","O") and rangee%2==1 and rangee<col:
+    elif direction in ("E","O") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
+        labyrinthe["coupsInterdit"]=(rangee,direction)
         return False
 
     return True
