@@ -223,7 +223,7 @@ def coderMurs(c):
         val+=100
     if murOuest(c):
         val+=1000
-        
+
     return int(str(val),2)
 
 

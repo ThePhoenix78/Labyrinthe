@@ -171,13 +171,12 @@ def coupInterdit(labyrinthe,direction,rangee):
 
 
     if direction in ("N","S") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
-        labyrinthe["coupsInterdit"]=(rangee,direction)
         return False
 
     elif direction in ("E","O") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
-        labyrinthe["coupsInterdit"]=(rangee,direction)
         return False
-
+        
+    labyrinthe["coupsInterdit"]=(rangee,direction)
     return True
 
 def jouerCarte(labyrinthe,direction,rangee):
