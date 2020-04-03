@@ -253,11 +253,11 @@ def demarrer(lmt):
                 if chemin==None:
                     afficheLabyrinthe(lmt,"Cette case n'est pas accessible au joueur "+nomJC)
         # le joueur a saisi une destination correcte et accessible
-        # on déplace le joueur sur sa case destination
         if xDep!=None:
+            # on déplace le joueur sur sa case destination
             animationChemin(lmt,chemin,pionJC)
-        # sauvegarde du numéro de trésor à trouver pour l'affichage
-        t=getTresorCourant(labyrinthe)
+            # sauvegarde du numéro de trésor à trouver pour l'affichage
+            t=getTresorCourant(labyrinthe)
         # action finalisant le tour
         res2=finirTour(labyrinthe)
         message=""
