@@ -36,16 +36,15 @@ def estValide(c):
     retourne un booléen indiquant si la carte est valide ou non c'est à dire qu'elle a zéro un ou deux murs
     paramètre: c une carte
     """
-    Valide=False
-    NbCarte=0
+    mur=0
     for x, y in c.items():
         if y==True:
-            NbCarte=NbCarte+1
+            mur+=1
 
-    if NbCarte<3:
-      Valide=True
+    if mur<3:
+      return True
 
-    return Valide
+    return False
 
 def murNord(c):
     """

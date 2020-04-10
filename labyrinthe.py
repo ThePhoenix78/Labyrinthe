@@ -166,16 +166,10 @@ def coupInterdit(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-    lig=getNbColonnes(labyrinthe["plateau"])
-    col=getNbLignes(labyrinthe["plateau"])
 
-
-    if direction in ("N","S") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
+    if rangee != labyrinthe["coupsInterdit"][0] or direction not in labyrinthe["coupsInterdit"][1]:
         return False
 
-    elif direction in ("E","O") and rangee%2==1 and rangee<col and (rangee!=labyrinthe["coupsInterdit"][0] or direction in labyrinthe["coupsInterdit"][1]):
-        return False
-        
     labyrinthe["coupsInterdit"]=(rangee,direction)
     return True
 
