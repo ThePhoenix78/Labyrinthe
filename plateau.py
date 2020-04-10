@@ -264,7 +264,7 @@ def accessibleDist(plateau,ligD,colD,ligA,colA):
 
     chemin=[]
 
-    for i in range(ligne*colone):
+    while True:
         for lig in range(ligne):
             for col in range(colone):
                 if getVal(matrice,lig,col)==1:
