@@ -36,7 +36,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
     plateau=Plateau(val,nbTresors)
-    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1,"coupsInterdit":(0,"0")}
+    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1,"coupsInterdit":(-1,"0")}
 
     return labyrinthe
 
@@ -167,11 +167,14 @@ def coupInterdit(labyrinthe,direction,rangee):
     résultat: un booléen indiquant si le coup est interdit ou non
     """
 
-    if rangee != labyrinthe["coupsInterdit"][0] or direction not in labyrinthe["coupsInterdit"][1]:
-        return False
+    if direction in ("N","S") and labyrinthe["coupsInterdit"][1] in ("N","S") and rangee == labyrinthe["coupsInterdit"][0] and direction not in labyrinthe["coupsInterdit"][1]:
+        return True
+
+    elif direction in ("E","O") and labyrinthe["coupsInterdit"][1] in ("E","O") and rangee == labyrinthe["coupsInterdit"][0] and direction not in labyrinthe["coupsInterdit"][1]:
+        return True
 
     labyrinthe["coupsInterdit"]=(rangee,direction)
-    return True
+    return False
 
 def jouerCarte(labyrinthe,direction,rangee):
     """
