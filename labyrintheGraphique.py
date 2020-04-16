@@ -344,7 +344,9 @@ class LabyrintheGraphique(object):
                         self.messageInfo="Veuillez cliquer sur la carte à jouer ou sur une flèche"
                         self.imgInfo=[]
                 else: # on est dans la phase 2
-                    if x in ['N','E','S','O','T'] or x==-1 or y==-1:
+                    if getCoordonneesJoueurCourant(self.labyrinthe)==None:
+                        res2=finirTour(self.labyrinthe)
+                    elif x in ['N','E','S','O','T'] or x==-1 or y==-1:
                         self.messageInfo="Veuillez choisir une case du labyrinthe"
                         self.imgInfo=[]
                     else:
