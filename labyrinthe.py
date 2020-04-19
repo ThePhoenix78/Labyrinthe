@@ -35,8 +35,8 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     initAleatoireJoueurCourant(joueurs)
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
-    plateau=Plateau(val,nbTresors)
-    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":plateau[0],"carteAjouer":plateau[1],"phase":1,"coupsInterdit":(-1,"0")}
+    plateau,carteAjouer=Plateau(val,nbTresors)
+    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":[plateau,carteAjouer],"phase":1,"coupsInterdit":(-1,"0")}
 
     return labyrinthe
 
@@ -46,7 +46,7 @@ def getPlateau(labyrinthe):
     paramètre: labyrinthe le labyrinthe considéré
     résultat: la matrice représentant le plateau de ce labyrinthe
     """
-    return labyrinthe["plateau"]
+    return getMatrice(labyrinthe["plateau"])
 
 def getNbParticipants(labyrinthe):
     """
@@ -121,7 +121,7 @@ def enleverTresor(labyrinthe,lin,col,numTresor):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
     labyrinthe["tresors"]-=1
-    prendreTresorPlateau(labyrinthe["plateau"],lin,col,numTresor)
+    prendreTresorPlateau(getPlateau(labyrinthe),lin,col,numTresor)
 
 
 def prendreJoueurCourant(labyrinthe,lin,col):
@@ -134,7 +134,7 @@ def prendreJoueurCourant(labyrinthe,lin,col):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
     joueur = getJoueurCourant(labyrinthe["Joueurs"])
-    prendrePionPlateau(labyrinthe["plateau"],lin,col,joueur)
+    prendrePionPlateau(getPlateau(labyrinthe),lin,col,joueur)
 
 
 def poserJoueurCourant(labyrinthe,lin,col):
@@ -146,7 +146,7 @@ def poserJoueurCourant(labyrinthe,lin,col):
     la fonction ne retourne rien mais modifie le labyrinthe
     """
     joueur = getJoueurCourant(labyrinthe["Joueurs"])
-    poserPionPlateau(labyrinthe["plateau"],lin,col,joueur)
+    poserPionPlateau(getPlateau(labyrinthe),lin,col,joueur)
 
 def getCarteAJouer(labyrinthe):
     """
@@ -154,7 +154,7 @@ def getCarteAJouer(labyrinthe):
     paramètre: labyrinthe: le labyrinthe considéré
     résultat: la carte à jouer
     """
-    return labyrinthe["carteAjouer"]
+    return getCarte(labyrinthe["plateau"])
 
 
 def coupInterdit(labyrinthe,direction,rangee):
@@ -166,7 +166,6 @@ def coupInterdit(labyrinthe,direction,rangee):
                 rangee: le numéro de la ligne ou de la colonne choisie
     résultat: un booléen indiquant si le coup est interdit ou non
     """
-
     if direction in ("N","S") and labyrinthe["coupsInterdit"][1] in ("N","S") and rangee == labyrinthe["coupsInterdit"][0] and direction not in labyrinthe["coupsInterdit"][1]:
         return True
 
@@ -189,16 +188,15 @@ def jouerCarte(labyrinthe,direction,rangee):
     Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
     if direction=="N":
-        carte=decalageColonneEnBas(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+        carte=decalageColonneEnBas(getPlateau(labyrinthe),rangee,getCarteAJouer(labyrinthe))
     elif direction=="S":
-        carte=decalageColonneEnHaut(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+        carte=decalageColonneEnHaut(getPlateau(labyrinthe),rangee,getCarteAJouer(labyrinthe))
     elif direction=="E":
-        carte=decalageLigneAGauche(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+        carte=decalageLigneAGauche(getPlateau(labyrinthe),rangee,getCarteAJouer(labyrinthe))
     elif direction=="O":
-        carte=decalageLigneADroite(labyrinthe["plateau"],rangee,labyrinthe["carteAjouer"])
+        carte=decalageLigneADroite(getPlateau(labyrinthe),rangee,getCarteAJouer(labyrinthe))
 
-    labyrinthe["carteAjouer"]=carte
-
+    changerCarte(labyrinthe["plateau"],carte)
 
 
 def tournerCarte(labyrinthe,sens='H'):
@@ -209,9 +207,9 @@ def tournerCarte(labyrinthe,sens='H'):
      Cette fonction ne retourne pas de résultat mais mais à jour le labyrinthe
     """
     if sens=="H":
-        tournerHoraire(labyrinthe["carteAjouer"])
+        tournerHoraire(getCarteAJouer(labyrinthe))
     elif sens=="A":
-        tournerAntiHoraire(labyrinthe["carteAjouer"])
+        tournerAntiHoraire(getCarteAJouer(labyrinthe))
 
 def getTresorCourant(labyrinthe):
     """
@@ -229,7 +227,7 @@ def getCoordonneesTresorCourant(labyrinthe):
               n'est pas sur le plateau
     """
     tres=tresorCourant(labyrinthe["Joueurs"])
-    return getCoordonneesTresor(labyrinthe["plateau"],tres)
+    return getCoordonneesTresor(getPlateau(labyrinthe),tres)
 
 
 def getCoordonneesJoueurCourant(labyrinthe):
@@ -240,7 +238,7 @@ def getCoordonneesJoueurCourant(labyrinthe):
               n'est pas sur le plateau
     """
     jou=numJoueurCourant(labyrinthe["Joueurs"])
-    return getCoordonneesJoueur(labyrinthe["plateau"],jou)
+    return getCoordonneesJoueur(getPlateau(labyrinthe),jou)
 
 
 def executerActionPhase1(labyrinthe,action,rangee):
@@ -286,7 +284,7 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
     val = getCoordonneesJoueurCourant(labyrinthe)
-    return accessibleDist(labyrinthe["plateau"],val[0],val[1],ligA,colA)
+    return accessibleDist(getPlateau(labyrinthe),val[0],val[1],ligA,colA)
 
 def finirTour(labyrinthe):
     """
@@ -303,7 +301,7 @@ def finirTour(labyrinthe):
     coordTres = getCoordonneesTresorCourant(labyrinthe)
     if coordJoueur == coordTres:
         joueurCourantTrouveTresor(labyrinthe["Joueurs"])
-        prendreTresorPlateau(labyrinthe["plateau"],coordTres[0],coordTres[1],tresC)
+        prendreTresorPlateau(getPlateau(labyrinthe),coordTres[0],coordTres[1],tresC)
         if joueurCourantAFini(labyrinthe["Joueurs"]):
             return 2
         else:
@@ -319,6 +317,8 @@ def finirTour(labyrinthe):
 
 if __name__ ==  "__main__":
     laby=Labyrinthe(["a","b","c","d"])
+    a=getPlateau(laby)
+    b=getCarteAJouer(laby)
     getCoordonneesJoueurCourant(laby)
     enleverTresor(laby,1,1,5)
     jouerCarte(laby,"S",5)

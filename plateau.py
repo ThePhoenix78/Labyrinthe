@@ -71,6 +71,18 @@ def Plateau(nbJoueurs, nbTresors):
 
     return matrice,cartes.pop()
 
+def getMatrice(plateau):
+    return plateau[0]
+
+def getCarte(plateau):
+    return plateau[1]
+
+def changerCarte(plateau,carte):
+    """
+    change la carte a jouer pour celle qui viens d'etre ejectée
+    """
+    plateau[1]=carte
+
 
 def creerCartesAmovibles(tresorDebut,nbTresors):
     """
@@ -121,9 +133,9 @@ def prendreTresorPlateau(plateau,lig,col,numTresor):
                 numTresor: le numéro du trésor à prendre sur la carte
     resultat: un booléen indiquant si le trésor était bien sur la carte considérée
     """
-    val=getTresor(plateau[lig][col])
+    val=getTresor(getVal(plateau,lig,col))
     if val==numTresor:
-        prendreTresor(plateau[lig][col])
+        prendreTresor(getVal(plateau,lig,col))
     return val==numTresor
 
 def getCoordonneesTresor(plateau,numTresor):
@@ -136,7 +148,7 @@ def getCoordonneesTresor(plateau,numTresor):
     """
     for i in range(len(plateau)):
         for j in range(len(plateau[i])):
-            val = getTresor(plateau[i][j])
+            val = getTresor(getVal(plateau,i,j))
             if val==numTresor:
                 return i,j
     return None
@@ -151,7 +163,7 @@ def getCoordonneesJoueur(plateau,numJoueur):
     """
     for i in range(len(plateau)):
         for j in range(len(plateau[i])):
-            if possedePion(plateau[i][j],numJoueur):
+            if possedePion(getVal(plateau,i,j),numJoueur):
                 return i,j
     return None
 
