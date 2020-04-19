@@ -9,13 +9,13 @@
    Ce module gère un joueur.
 """
 
-def Joueur(nom):
+def Joueur(nom,jou="J"):
     """
     creer un nouveau joueur portant le nom passé en paramètre. Ce joueur possède une liste de trésors à trouver vide
     paramètre: nom une chaine de caractères
     retourne le joueur ainsi créé
     """
-    return {"nom":nom,"tresor":[]}
+    return {"nom":nom,"tresor":[],"type":jou}
 
 
 def ajouterTresor(joueur,tresor):
@@ -63,3 +63,11 @@ def getNom(joueur):
     résultat: le nom du joueur
     """
     return joueur["nom"]
+
+def getType(joueur):
+    """
+    retourne le type de joueur
+    paramètre: joueur le joueur
+    résultat: le type de joueur
+    """
+    return joueur["type"]

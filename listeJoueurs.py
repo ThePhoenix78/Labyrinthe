@@ -20,7 +20,11 @@ def ListeJoueurs(nomsJoueurs):
     """
     listeDesJoueurs={"joueurs":[],"courant":1}
     for nom in nomsJoueurs:
-        listeDesJoueurs["joueurs"].append(Joueur(nom))
+        if type(nom) == type((1,1)):
+            listeDesJoueurs["joueurs"].append(Joueur(nom[0],"I"))
+        else:
+            listeDesJoueurs["joueurs"].append(Joueur(nom))
+
     return listeDesJoueurs
 
 
@@ -65,7 +69,6 @@ def distribuerTresors(joueurs,nbTresors=24, nbTresorMax=0):
     for jou in joueurs:
         for t in range(nbTresorMax):
             ajouterTresor(jou,liste.pop())
-
 
 
 def changerJoueurCourant(joueurs):
@@ -129,6 +132,15 @@ def numJoueurCourant(joueurs):
     résultat: le numéro du joueur courant
     """
     return joueurs["courant"]
+
+def typeJoueurCourant(joueurs):
+    """
+    retourne le type du joueur courant
+    paramètre: joueurs la liste des joueurs
+    résultat: le type du joueur courant
+    """
+    joueur=getJoueurCourant(joueurs)
+    return getType(joueur)
 
 def nomJoueurCourant(joueurs):
     """

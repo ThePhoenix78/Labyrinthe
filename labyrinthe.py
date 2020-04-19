@@ -56,6 +56,7 @@ def getNbParticipants(labyrinthe):
     """
     return getNbJoueurs(labyrinthe["Joueurs"])
 
+
 def getNomJoueurCourant(labyrinthe):
     """
     retourne le nom du joueur courant
@@ -63,6 +64,15 @@ def getNomJoueurCourant(labyrinthe):
     résultat: le nom du joueurs courant
     """
     return nomJoueurCourant(labyrinthe["Joueurs"])
+
+def getTypeJoueurCourant(labyrinthe):
+    """
+    retourne le type du joueur courant
+    paramètre: labyrinthe le labyrinthe considéré
+    résultat: le type du joueurs courant
+    """
+    return typeJoueurCourant(labyrinthe["Joueurs"])
+
 
 def getNumJoueurCourant(labyrinthe):
     """
@@ -286,6 +296,7 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     val = getCoordonneesJoueurCourant(labyrinthe)
     return accessibleDist(getPlateau(labyrinthe),val[0],val[1],ligA,colA)
 
+
 def finirTour(labyrinthe):
     """
     vérifie si le joueur courant vient de trouver un trésor (si oui fait le nécessaire)
@@ -313,7 +324,43 @@ def finirTour(labyrinthe):
         changerPhase(labyrinthe)
         return 0
 
+def labyrintheIA(labyrinthe):
+    """
+    L'IA du jeu du labyrinthe
+    """
+    dir=["N","S","E","O"]
+    ran=[1,3,5]
 
+    tresorX,tresorY=getCoordonneesTresorCourant(labyrinthe)
+
+
+    if getPhase(labyrinthe)==1:
+        for h in range(4):
+            tournerCarte(labyrinthe)
+            labyV=labyrinthe
+            for i in dir:
+                for j in ran:
+                    if not coupInterdit(labyrinthe,i,j):
+                        val=executerActionPhase1(labyV,i,j)
+                        if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None:
+                            return i,j
+
+        while True:
+            i=random.choice(dir)
+            j=random.choice(ran)
+            if not coupInterdit(labyrinthe,i,j):
+                return i,j
+
+    elif accessibleDistJoueurCourant(labyrinthe,tresorX,tresorY)!=None and getPhase(labyrinthe)==2:
+        return tresorX,tresorY
+
+    elif getPhase(labyrinthe)==2:
+        plat=getPlateau(labyrinthe)
+        while True:
+            i=random.randint(0,getNbLignes(plat)-1)
+            j=random.randint(0,getNbColonnes(plat)-1)
+            if accessibleDistJoueurCourant(labyrinthe,i,j):
+                return i,j
 
 if __name__ ==  "__main__":
     laby=Labyrinthe(["a","b","c","d"])

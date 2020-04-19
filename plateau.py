@@ -245,6 +245,7 @@ def accessible(plateau,ligD,colD,ligA,colA):
 
     return False
 
+
 def accessibleDist(plateau,ligD,colD,ligA,colA):
     """
     indique si il y a un chemin entre la case ligD,colD et la case ligA,colA du plateau
