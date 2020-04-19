@@ -293,8 +293,8 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    val = getCoordonneesJoueurCourant(labyrinthe)
-    return accessibleDist(getPlateau(labyrinthe),val[0],val[1],ligA,colA)
+    val0,val1 = getCoordonneesJoueurCourant(labyrinthe)
+    return accessibleDist(getPlateau(labyrinthe),val0,val1,ligA,colA)
 
 
 def finirTour(labyrinthe):
@@ -324,6 +324,7 @@ def finirTour(labyrinthe):
         changerPhase(labyrinthe)
         return 0
 
+
 def labyrintheIA(labyrinthe):
     """
     L'IA du jeu du labyrinthe
@@ -331,10 +332,14 @@ def labyrintheIA(labyrinthe):
     dir=["N","S","E","O"]
     ran=[1,3,5]
 
-    tresorX,tresorY=getCoordonneesTresorCourant(labyrinthe)
+    try:
+        tresorX,tresorY=getCoordonneesTresorCourant(labyrinthe)
+    except:
+        tresorX=getCoordonneesTresorCourant(labyrinthe)
 
+    cj=getCoordonneesJoueurCourant(labyrinthe)
 
-    if getPhase(labyrinthe)==1:
+    if getPhase(labyrinthe)==1 and getCoordonneesTresorCourant(labyrinthe)!=None and cj!=None:
         for h in range(4):
             tournerCarte(labyrinthe)
             labyV=labyrinthe
@@ -342,7 +347,7 @@ def labyrintheIA(labyrinthe):
                 for j in ran:
                     if not coupInterdit(labyrinthe,i,j):
                         val=executerActionPhase1(labyV,i,j)
-                        if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None:
+                        if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None:
                             return i,j
 
         while True:
@@ -351,7 +356,41 @@ def labyrintheIA(labyrinthe):
             if not coupInterdit(labyrinthe,i,j):
                 return i,j
 
-    elif accessibleDistJoueurCourant(labyrinthe,tresorX,tresorY)!=None and getPhase(labyrinthe)==2:
+    elif getPhase(labyrinthe)==1 and cj!=None:
+        for h in range(4):
+            tournerCarte(labyrinthe)
+            labyV=labyrinthe
+            for i in dir:
+                for j in ran:
+                    if not coupInterdit(labyrinthe,i,j):
+                        val=executerActionPhase1(labyV,i,j)
+                        try:
+                            tresorX,tresorY=getCoordonneesTresorCourant(labyV)
+                            acc=accessibleDistJoueurCourant(labyV,tresorX,tresorY)
+                        except:
+                            tresorX=getCoordonneesTresorCourant(labyV)
+                            acc=None
+                        if acc!=None and tresorX!=None:
+                            return i,j
+
+        while True:
+            i=random.choice(dir)
+            j=random.choice(ran)
+            if not coupInterdit(labyrinthe,i,j):
+                return i,j
+
+
+    elif getPhase(labyrinthe)==1:
+        while True:
+            i=random.choice(dir)
+            j=random.choice(ran)
+            if not coupInterdit(labyrinthe,i,j):
+                return i,j
+
+    if cj==None and getPhase(labyrinthe)==2:
+        return None
+
+    elif tresorX!=None and accessibleDistJoueurCourant(labyrinthe,tresorX,tresorY)!=None and cj!=None and getCoordonneesTresorCourant(labyrinthe)!=None and getPhase(labyrinthe)==2:
         return tresorX,tresorY
 
     elif getPhase(labyrinthe)==2:
@@ -361,6 +400,7 @@ def labyrintheIA(labyrinthe):
             j=random.randint(0,getNbColonnes(plat)-1)
             if accessibleDistJoueurCourant(labyrinthe,i,j):
                 return i,j
+
 
 if __name__ ==  "__main__":
     laby=Labyrinthe(["a","b","c","d"])

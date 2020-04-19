@@ -322,10 +322,18 @@ class LabyrintheGraphique(object):
                 fenetre=pygame.display.set_mode(ev.size,pygame.RESIZABLE|pygame.DOUBLEBUF)
                 self.miseAjourParametres()
                 self.afficheJeu()
-            if ev.type==pygame.MOUSEBUTTONDOWN and getTypeJoueurCourant(self.labyrinthe)=="J":
+            if ev.type==pygame.MOUSEBUTTONDOWN or getTypeJoueurCourant(self.labyrinthe)=="I":
                 if self.fini:
                     continue
-                (x,y)=self.getCase(ev.pos)
+
+                if getTypeJoueurCourant(self.labyrinthe)=="J":
+                    (x,y)=self.getCase(ev.pos)
+                elif getTypeJoueurCourant(self.labyrinthe)=="I":
+                    try:
+                        (x,y)=labyrintheIA(self.labyrinthe)
+                    except:
+                        x=labyrintheIA(self.labyrinthe)
+
                 if getPhase(self.labyrinthe)==1:
                     res=executerActionPhase1(self.labyrinthe,x,y)
                     if res==0:
@@ -344,7 +352,7 @@ class LabyrintheGraphique(object):
                         self.messageInfo="Veuillez cliquer sur la carte à jouer ou sur une flèche"
                         self.imgInfo=[]
                 else: # on est dans la phase 2
-                    if getCoordonneesJoueurCourant(self.labyrinthe)==None:
+                    if getCoordonneesJoueurCourant(self.labyrinthe)==None or x==None:
                         res2=finirTour(self.labyrinthe)
                     elif x in ['N','E','S','O','T'] or x==-1 or y==-1:
                         self.messageInfo="Veuillez choisir une case du labyrinthe"
@@ -366,55 +374,6 @@ class LabyrintheGraphique(object):
                             elif res2==1:
                                 self.messageInfo="Le joueur @img@ vient de trouver le trésor @img@"
                                 self.imgInfo=[self.surfacePion(jc),self.surfaceTresor(t)]
-
-
-
-            elif getTypeJoueurCourant(self.labyrinthe)=="I":
-                if self.fini:
-                    continue
-                (x,y)=labyrintheIA(self.labyrinthe)
-                if getPhase(self.labyrinthe)==1:
-                    res=executerActionPhase1(self.labyrinthe,x,y)
-                    if res==0:
-                        self.messageInfo="La carte a été tournée"
-                        self.imgInfo=[]
-                    elif res==1:
-                        self.messageInfo="La carte a bien été insérée"
-                        self.imgInfo=[]
-                    elif res==2:
-                        self.messageInfo="Ce coup est interdit car l'opposé du précédent"
-                        self.imgInfo=[]
-                    elif res==3:
-                        self.messageInfo="Vous devez insérer la carte avant de vous déplacer"
-                        self.imgInfo=[]
-                    else:
-                        self.messageInfo="Veuillez cliquer sur la carte à jouer ou sur une flèche"
-                        self.imgInfo=[]
-                else: # on est dans la phase 2
-                    if getCoordonneesJoueurCourant(self.labyrinthe)==None:
-                        res2=finirTour(self.labyrinthe)
-                    elif x in ['N','E','S','O','T'] or x==-1 or y==-1:
-                        self.messageInfo="Veuillez choisir une case du labyrinthe"
-                        self.imgInfo=[]
-                    else:
-                        chemin=accessibleDistJoueurCourant(self.labyrinthe,x,y)
-                        jc=numJoueurCourant(getListeJoueurs(self.labyrinthe))
-                        if chemin==None:
-                            self.messageInfo="Cette case n'est pas accessible au joueur @img@"
-                            self.imgInfo=[self.surfacePion(jc)]
-                        else: # on a un chemin donc le déplacement est possible
-                            self.animationChemin(chemin,jc)
-                            t=tresorCourant(getListeJoueurs(self.labyrinthe))
-                            res2=finirTour(self.labyrinthe)
-                            if res2==2:
-                                self.messageInfo="Le joueur @img@ a gagné"
-                                self.imgInfo=[self.surfacePion(jc)]
-                                self.fini=True
-                            elif res2==1:
-                                self.messageInfo="Le joueur @img@ vient de trouver le trésor @img@"
-                                self.imgInfo=[self.surfacePion(jc),self.surfaceTresor(t)]
-
-
 
                 self.afficheJeu()
 
