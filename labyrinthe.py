@@ -181,7 +181,6 @@ def coupInterdit(labyrinthe,direction,rangee):
     elif direction in ("E","O") and labyrinthe["coupsInterdit"][1] in ("E","O") and rangee == labyrinthe["coupsInterdit"][0] and direction not in labyrinthe["coupsInterdit"][1]:
         return True
 
-    labyrinthe["coupsInterdit"]=(rangee,direction)
     return False
 
 def jouerCarte(labyrinthe,direction,rangee):
@@ -273,9 +272,9 @@ def executerActionPhase1(labyrinthe,action,rangee):
         if coupInterdit(labyrinthe,action,rangee):
             return 2
         else:
-            coupInterdit(labyrinthe,action,rangee)
             jouerCarte(labyrinthe,action,rangee)
             changerPhase(labyrinthe)
+            labyrinthe["coupsInterdit"]=(action,rangee)
             return 1
     elif (action and rangee) in ["0","1","2","3","4","5","6","7","8","9"]:
         return 3
