@@ -314,7 +314,7 @@ def finirTour(labyrinthe):
     coordJoueur = getCoordonneesJoueurCourant(labyrinthe)
     coordTres = getCoordonneesTresorCourant(labyrinthe)
 
-    if coordJoueur == coordTres and type(coordJoueur)==type(coordTres):
+    if coordJoueur == coordTres and type(coordJoueur) == type(coordTres) and coordTres!=None:
         joueurCourantTrouveTresor(labyrinthe["Joueurs"])
         prendreTresorPlateau(getPlateau(labyrinthe),coordTres[0],coordTres[1],tresC)
         if joueurCourantAFini(labyrinthe["Joueurs"]):
@@ -349,8 +349,7 @@ def labyrintheIA(labyrinthe):
             for i in dir:
                 for j in ran:
                     labyV=copy.deepcopy(labyrinthe)
-                    #labyV=labyrinthe.copy()
-                    if not coupInterdit(labyV,i,j):
+                    if not coupInterdit(labyrinthe,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None and val==1:
                             return i,j
@@ -367,8 +366,7 @@ def labyrintheIA(labyrinthe):
             for i in dir:
                 for j in ran:
                     labyV=copy.deepcopy(labyrinthe)
-                    #labyV=labyrinthe.copy()
-                    if not coupInterdit(labyV,i,j):
+                    if not coupInterdit(labyrinthe,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         try:
                             tresorX,tresorY=getCoordonneesTresorCourant(labyV)
