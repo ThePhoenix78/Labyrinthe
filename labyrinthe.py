@@ -185,7 +185,7 @@ def coupInterdit(labyrinthe,direction,rangee):
     return False
 
 def jouerCarte(labyrinthe,direction,rangee):
-    """ 
+    """
     fonction qui joue la carte amovible dans la direction et sur la rangée passées
     en paramètres. Cette fonction
        - met à jour le plateau du labyrinthe
@@ -341,9 +341,9 @@ def labyrintheIA(labyrinthe):
     if getPhase(labyrinthe)==1 and getCoordonneesTresorCourant(labyrinthe)!=None and cj!=None:
         for h in range(4):
             tournerCarte(labyrinthe)
-            labyV=labyrinthe
             for i in dir:
                 for j in ran:
+                    labyV=labyrinthe
                     if not coupInterdit(labyrinthe,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None:
@@ -358,9 +358,9 @@ def labyrintheIA(labyrinthe):
     elif getPhase(labyrinthe)==1 and cj!=None:
         for h in range(4):
             tournerCarte(labyrinthe)
-            labyV=labyrinthe
             for i in dir:
                 for j in ran:
+                    labyV=labyrinthe
                     if not coupInterdit(labyrinthe,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         try:
@@ -386,7 +386,7 @@ def labyrintheIA(labyrinthe):
             if not coupInterdit(labyrinthe,i,j):
                 return i,j
 
-    if cj==None and getPhase(labyrinthe)==2:
+    elif cj==None and getPhase(labyrinthe)==2:
         return None
 
     elif tresorX!=None and accessibleDistJoueurCourant(labyrinthe,tresorX,tresorY)!=None and cj!=None and getCoordonneesTresorCourant(labyrinthe)!=None and getPhase(labyrinthe)==2:

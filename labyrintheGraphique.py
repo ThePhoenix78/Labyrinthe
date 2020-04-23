@@ -333,6 +333,7 @@ class LabyrintheGraphique(object):
                         (x,y)=labyrintheIA(self.labyrinthe)
                     except:
                         x=labyrintheIA(self.labyrinthe)
+                    time.sleep(0.5)
 
                 if getPhase(self.labyrinthe)==1:
                     res=executerActionPhase1(self.labyrinthe,x,y)
