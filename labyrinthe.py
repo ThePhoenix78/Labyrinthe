@@ -35,8 +35,7 @@ def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
     initAleatoireJoueurCourant(joueurs)
     distribuerTresors(joueurs,nbTresors,nbTresorsMax)
     val=getNbJoueurs(joueurs)
-    plateau,carteAjouer=Plateau(val,nbTresors)
-    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":[plateau,carteAjouer],"phase":1,"coupsInterdit":(-1,"0")}
+    labyrinthe={"Joueurs":joueurs,"tresors":nbTresors,"plateau":Plateau(val,nbTresors),"phase":1,"coupsInterdit":(-1,"0")}
 
     return labyrinthe
 
@@ -186,7 +185,7 @@ def coupInterdit(labyrinthe,direction,rangee):
     return False
 
 def jouerCarte(labyrinthe,direction,rangee):
-    """
+    """ 
     fonction qui joue la carte amovible dans la direction et sur la rangée passées
     en paramètres. Cette fonction
        - met à jour le plateau du labyrinthe

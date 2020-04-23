@@ -69,7 +69,7 @@ def Plateau(nbJoueurs, nbTresors):
             else:
                 setVal(matrice,i,j,cartes.pop(0))
 
-    return matrice,cartes.pop()
+    return [matrice,cartes.pop()]
 
 def getMatrice(plateau):
     return plateau[0]
