@@ -273,6 +273,7 @@ def executerActionPhase1(labyrinthe,action,rangee):
         if coupInterdit(labyrinthe,action,rangee):
             return 2
         else:
+            coupInterdit(labyrinthe,action,rangee)
             jouerCarte(labyrinthe,action,rangee)
             changerPhase(labyrinthe)
             return 1
@@ -344,7 +345,7 @@ def labyrintheIA(labyrinthe):
             for i in dir:
                 for j in ran:
                     labyV=labyrinthe
-                    if not coupInterdit(labyrinthe,i,j):
+                    if not coupInterdit(labyV,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None:
                             return i,j
@@ -361,7 +362,7 @@ def labyrintheIA(labyrinthe):
             for i in dir:
                 for j in ran:
                     labyV=labyrinthe
-                    if not coupInterdit(labyrinthe,i,j):
+                    if not coupInterdit(labyV,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         try:
                             tresorX,tresorY=getCoordonneesTresorCourant(labyV)
