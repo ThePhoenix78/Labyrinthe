@@ -116,7 +116,7 @@ def creerCartesAmovibles(tresorDebut,nbTresors):
 
     for i in range(tresorDebut,nbTresors):
         mettreTresor(liste[i-1],i)
-    
+
     random.shuffle(liste)
 
     return liste

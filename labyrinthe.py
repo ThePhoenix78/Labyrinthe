@@ -11,6 +11,7 @@
 
 from listeJoueurs import *
 from plateau import *
+import copy
 
 
 def Labyrinthe(nomsJoueurs=["joueur1","joueurs2"],nbTresors=24, nbTresorsMax=0):
@@ -292,7 +293,10 @@ def accessibleDistJoueurCourant(labyrinthe, ligA,colA):
     résultat: une liste de couples d'entier représentant un chemin que le joueur
               courant atteigne la case d'arrivée s'il existe None si pas de chemin
     """
-    val0,val1 = getCoordonneesJoueurCourant(labyrinthe)
+    try:
+        val0,val1 = getCoordonneesJoueurCourant(labyrinthe)
+    except:
+        return None
     return accessibleDist(getPlateau(labyrinthe),val0,val1,ligA,colA)
 
 
@@ -309,7 +313,8 @@ def finirTour(labyrinthe):
     tresC = getTresorCourant(labyrinthe)
     coordJoueur = getCoordonneesJoueurCourant(labyrinthe)
     coordTres = getCoordonneesTresorCourant(labyrinthe)
-    if coordJoueur == coordTres:
+
+    if coordJoueur == coordTres and type(coordJoueur)==type(coordTres):
         joueurCourantTrouveTresor(labyrinthe["Joueurs"])
         prendreTresorPlateau(getPlateau(labyrinthe),coordTres[0],coordTres[1],tresC)
         if joueurCourantAFini(labyrinthe["Joueurs"]):
@@ -343,10 +348,11 @@ def labyrintheIA(labyrinthe):
             tournerCarte(labyrinthe)
             for i in dir:
                 for j in ran:
-                    labyV=labyrinthe
+                    labyV=copy.deepcopy(labyrinthe)
+                    #labyV=labyrinthe.copy()
                     if not coupInterdit(labyV,i,j):
                         val=executerActionPhase1(labyV,i,j)
-                        if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None:
+                        if accessibleDistJoueurCourant(labyV,tresorX,tresorY)!=None and getCoordonneesTresorCourant(labyrinthe)!=None and val==1:
                             return i,j
 
         while True:
@@ -360,7 +366,8 @@ def labyrintheIA(labyrinthe):
             tournerCarte(labyrinthe)
             for i in dir:
                 for j in ran:
-                    labyV=labyrinthe
+                    labyV=copy.deepcopy(labyrinthe)
+                    #labyV=labyrinthe.copy()
                     if not coupInterdit(labyV,i,j):
                         val=executerActionPhase1(labyV,i,j)
                         try:
@@ -369,7 +376,7 @@ def labyrintheIA(labyrinthe):
                         except:
                             tresorX=getCoordonneesTresorCourant(labyV)
                             acc=None
-                        if acc!=None and tresorX!=None:
+                        if acc!=None and tresorX!=None and val==1:
                             return i,j
 
         while True:
